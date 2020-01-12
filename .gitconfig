@@ -1,0 +1,16 @@
+[user]
+	name = Hyunsoo Shin
+    email = hyunsoo7708@gmail.com
+    username = hyunsooda
+
+[include]
+    path = .gitconfig.common
+[color]
+    ui = auto
+[tig "color"]
+    date = cyan default
+    author = blue default
+    graph-commit = white default bold
+    main-head = cyan default bold
+    main-ref = green default bold
+    main-remote = red default bold
