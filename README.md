@@ -21,3 +21,8 @@
 <ul>
   <li> tmux -2 </li>
 </ul>
+
+### To fix when docker linuxkit is stuck (only MacOS)
+<ul>
+  <li> Just kill the process </li>
+</ul>
