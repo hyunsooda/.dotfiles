@@ -16,3 +16,8 @@
 <ul>
 <li> iTerm 2 </li>
 </ul>
+
+### To fix color changing when using tmux
+<ul>
+  <li> tmux -2 </li>
+</ul>
