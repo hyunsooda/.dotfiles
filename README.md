@@ -8,6 +8,7 @@
 <li> tmux.conf </li>
 <li> vimrc </li>
 <li> zshrc </li>
+<li> Dockerfile </li>
 <li> ctags_setup </li>
 </ul>
 
