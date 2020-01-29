@@ -3,9 +3,11 @@ MAINTAINER hyunsooda
 
 ENV HOME /root/hyunsoo
 RUN mkdir /home/.dotfiles
+
 RUN \
     apt-get update && \
     apt-get -y install \
+			software-properties-common \
             vim \
             git \
             tmux \
@@ -16,8 +18,13 @@ RUN \
             valgrind \
             curl \
             make \
-            zsh \
-            golang-go
+            zsh
+
+# latest golang install
+RUN add-apt-repository -y ppa:longsleep/golang-backports && \
+	apt-get -y install \
+			golang-go
+
 
 # Change default shell to ZSH
 RUN chsh -s $(which zsh)
