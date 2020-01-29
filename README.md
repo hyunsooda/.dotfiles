@@ -1,7 +1,7 @@
 # Environment
 
 
-### Configs
+#### Configs
 <ul>
 <li> gitconfigs </li>
 <li> gitignore </li>
@@ -13,17 +13,19 @@
 </ul>
 
 
-### Tool
+#### Tool
 <ul>
 <li> iTerm 2 </li>
 </ul>
 
-### To fix color changing when using tmux
+## Troubleshooting
+
+#### To fix color changing when using tmux
 <ul>
   <li> tmux -2 </li>
 </ul>
 
-### To fix when docker linuxkit is stuck (only MacOS)
+#### To fix when docker linuxkit is stuck (only MacOS)
 <ul>
   <li> Just kill the process </li>
 </ul>
