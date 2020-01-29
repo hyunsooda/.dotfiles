@@ -6,6 +6,7 @@
 " Plugin settings
 " Keyboard shortcuts
 
+
 " #### Vim Plugins ############################
 set nocompatible  " it must be the first line to enable Vim features.
 
@@ -50,10 +51,12 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'nvie/vim-flake8'
 Plug 'blukat29/vim-llvm-lite' " LLVM IR and TableGen
 Plug 'kchmck/vim-coffee-script'
+Plug 'fatih/vim-go'
 
 call plug#end()
 
 " #### General ###################################
+set clipboard=unnamed " use OS clipboard
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -96,6 +99,7 @@ autocmd Filetype html setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype htmldjango setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype xml setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype yaml setlocal expandtab ts=2 sw=2 sts=2
+autocmd Filetype go setlocal noexpandtab
 
 " Override syntax highlighting
 " Highlights arrow function (=>), underscore.js (lodash), jquery APIs.
@@ -158,6 +162,10 @@ let g:tagbar_sort = 0
 let g:tagbar_foldlevel = 2
 
 let g:flake8_show_in_gutter = 1
+
+" vim-go
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
 
 " #### Coloring ##################################
 
@@ -236,9 +244,4 @@ xmap ga <Plug>(EasyAlign)
 " Toggle paste mode with Control-P
 set pastetoggle=<C-p>
 
-" resize current buffer by +/- 5 
-nnoremap <D-left> :vertical resize -50<cr>
-nnoremap <D-down> :resize +50<cr>
-nnoremap <D-up> :resize -50<cr>
-nnoremap <D-right> :vertical resize +50<cr>
 
