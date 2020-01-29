@@ -102,5 +102,3 @@ autoload -U promptinit; promptinit
 prompt pure
 
 export LC_ALL=ko_KR.UTF-8
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
