@@ -1,8 +1,10 @@
+export HOME=/root/hyunsoo
+
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH:/desktop
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/shinhyunsoo/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -99,17 +101,6 @@ source $ZSH/oh-my-zsh.sh
 autoload -U promptinit; promptinit
 prompt pure
 
-#alias vim="nvim"
-#alias vi="nvim"
-#alias vimdiff="nvim -d"
-#export EDITOR=/usr/local/bin/nvim
+export LC_ALL=ko_KR.UTF-8
 
-export PATH="/usr/local/mysql/bin:$PATH"
-export PATH="/anaconda2/bin:$PATH"
-export PATH="/usr/local/texlive/2018/bin/x86_64-darwin:$PATH"
-
-export GOPATH="$HOME/Desktop/go-libp2p-examples:$HOME/Desktop/asdtemp:$HOME/Desktop/go-practice/temp1"
-
-
-alias python=python3
-alias sudo='sudo '
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
