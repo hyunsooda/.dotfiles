@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 MAINTAINER hyunsooda
 
-#ENV HOME /root/hyunsoo
+ENV HOME /root/hyunsoo
 RUN mkdir /home/.dotfiles
 RUN \
     apt-get update && \
@@ -28,6 +28,10 @@ RUN git clone https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 # Install Oh My Zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+# Install Oh My Zsh Tools
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
 # install dotfiles
 RUN git clone https://github.com/hyunsooda/config.git ~/.dotfiles
 RUN \
@@ -36,6 +40,7 @@ RUN \
     ln -s ~/.dotfiles/.gitconfig.common     ~/.gitconfig.common && \
     ln -s ~/.dotfiles/.gitignore            ~/.gitignore && \
     ln -s ~/.dotfiles/.tmux.conf            ~/.tmux.conf && \
+    mv ~/.dotfiles/.zshrc                   ~/.zshrc && \
     tmux new-session -s 123 -d && tmux source-file ~/.tmux.conf && \
-    cd $HOME && mkdir hyunsoo 
+    zsh
 
