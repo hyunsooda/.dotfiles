@@ -244,4 +244,7 @@ xmap ga <Plug>(EasyAlign)
 " Toggle paste mode with Control-P
 set pastetoggle=<C-p>
 
-
+" Comment Macro
+let @c="^i// \<ESC> \<Down>"   "@c
+" fmt.Println Macro
+let @f="fmt.Println( "         "fp
