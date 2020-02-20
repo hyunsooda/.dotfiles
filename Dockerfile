@@ -20,7 +20,8 @@ RUN \
             make \
             zsh \
             ocaml \
-            wget
+            wget \
+			sudo
 
 # latest golang install
 RUN add-apt-repository -y ppa:longsleep/golang-backports && \
@@ -43,6 +44,9 @@ WORKDIR $HOME/autoconf-2.69
 RUN ./configure --prefix=/usr && make && make install
 WORKDIR $HOME/automake-1.9
 RUN ./configure --prefix=/usr && make && make install
+
+# Install Opam
+RUN add-apt-repository ppa:avsm/ppa && apt update && apt install opam -y
 
 # Change default shell to ZSH
 RUN chsh -s $(which zsh)
@@ -68,3 +72,5 @@ RUN \
     mv ~/.dotfiles/.zshrc                   ~/.zshrc && \
     tmux new-session -s 123 -d && tmux source-file ~/.tmux.conf && \
     zsh
+
+WORKDIR $HOME
