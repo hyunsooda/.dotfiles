@@ -52,6 +52,9 @@ Plug 'nvie/vim-flake8'
 Plug 'blukat29/vim-llvm-lite' " LLVM IR and TableGen
 Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go'
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'Chiel92/vim-autoformat'
+Plug 'sbdchd/neoformat'
 
 call plug#end()
 
@@ -71,7 +74,8 @@ set viminfo=""  " disable viminfo
 set scrolloff=3   " Keep 3 lines above and below cursor.
 set laststatus=2  " Always turn on status line
 set backspace=indent,eol,start  " Make backspace work as other editors
-set tags=~/.vim/tags,tags;    " Read local tags file
+set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/lib/clangml/tags;    " Read local tags file
+"set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/tags;    " Read local tags file
 
 " #### File type specific ########################
 
@@ -91,6 +95,7 @@ autocmd BufNewFile,BufRead *.ts set filetype=javascript " TypeScript
 autocmd BufNewFile,BufRead *.ejs set filetype=html " EJS template
 autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
+autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 
 " Tab setting exceptions
 autocmd Filetype javascript setlocal expandtab ts=2 sw=2 sts=2
@@ -167,6 +172,12 @@ let g:flake8_show_in_gutter = 1
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 
+let g:formatter_yapf_style = 'pep8'
+
+" ocamlmerlin
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
 " #### Coloring ##################################
 
 if (&term == "screen-256color") || (&term =~ "term")
@@ -193,6 +204,13 @@ function! s:toggle_color_column()
     endif
 endfunction
 command! -nargs=0 ColorColumnToggle  call s:toggle_color_column()
+
+" Current line highlight
+function! s:current_line_highlight()
+    set cursorline!
+    hi CursorLine term=bold cterm=bold guibg=Grey40
+endfunction
+command! -nargs=0 CurLineHighlight  call s:current_line_highlight()
 
 " Trailing Whitespace
 hi TrailingWhitespace ctermbg=red
@@ -238,6 +256,9 @@ nmap <F8> :TagbarToggle<CR>
 " Toggle color columns
 nmap <F9> :ColorColumnToggle<CR>
 
+" set cursor line
+nmap <F7> :CurLineHighlight<CR>
+
 " Easy align
 xmap ga <Plug>(EasyAlign)
 
@@ -248,3 +269,50 @@ set pastetoggle=<C-p>
 let @c="^i// \<ESC> \<Down>"   "@c
 " fmt.Println Macro
 let @f="fmt.Println( "         "fp
+
+map <C-Y> :call yapf#YAPF()<cr>
+imap <C-Y> <c-o>:call yapf#YAPF()<cr>
+
+
+" @@@@@@@@@@@@@@@@@@@@@@@@@@@ OCaml @@@@@@@@@@@@@@@@@@@@@@@@@@@
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
+
+let g:neoformat_ocaml_ocamlformat = {
+            \ 'exe': 'ocamlformat',
+            \ 'no_append': 1,
+            \ 'stdin': 1,
+            \ 'args': ['--disable-outside-detected-project', '--name', '"%:p"', '-']
+            \ }
+
+let g:neoformat_enabled_ocaml = ['ocamlformat']
