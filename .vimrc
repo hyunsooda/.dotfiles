@@ -314,5 +314,11 @@ let g:neoformat_ocaml_ocamlformat = {
             \ 'stdin': 1,
             \ 'args': ['--disable-outside-detected-project', '--name', '"%:p"', '-']
             \ }
-
 let g:neoformat_enabled_ocaml = ['ocamlformat']
+
+let g:neoformat_cpp_clangformat = {
+            \ 'exe': 'clang-format-6.0',
+            \ 'args': ['--style="{BasedOnStyle: google, IndentWidth: 8, AccessModifierOffset: -4}"'],
+            \ }
+let g:neoformat_enabled_cpp = ['clang-format-6.0']
+let g:neoformat_enabled_c = ['clang-format-6.0']
