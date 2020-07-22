@@ -55,6 +55,7 @@ Plug 'fatih/vim-go'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'Chiel92/vim-autoformat'
 Plug 'sbdchd/neoformat'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -322,3 +323,6 @@ let g:neoformat_cpp_clangformat = {
             \ }
 let g:neoformat_enabled_cpp = ['clang-format-6.0']
 let g:neoformat_enabled_c = ['clang-format-6.0']
+
+" rust setup
+let g:rustfmt_autosave = 1
