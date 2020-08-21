@@ -109,3 +109,7 @@ export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 dus () {
 	du -h -d 1 $* | sort -h --reverse
 }
+
+count() {
+    ls -l | grep ^- | wc -ll
+}
