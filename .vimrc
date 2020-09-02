@@ -6,7 +6,6 @@
 " Plugin settings
 " Keyboard shortcuts
 
-
 " #### Vim Plugins ############################
 set nocompatible  " it must be the first line to enable Vim features.
 
@@ -57,6 +56,7 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'sbdchd/neoformat'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
+Plug 'xavierd/clang_complete'
 
 call plug#end()
 
@@ -76,7 +76,8 @@ set viminfo=""  " disable viminfo
 set scrolloff=3   " Keep 3 lines above and below cursor.
 set laststatus=2  " Always turn on status line
 set backspace=indent,eol,start  " Make backspace work as other editors
-set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/lib/clangml/tags;    " Read local tags file
+set tags=~/.vim/tags,tag;    " Read local tags file
+"set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/lib/clangml/tags;    " Read local tags file
 "set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/tags;    " Read local tags file
 
 " #### File type specific ########################
@@ -98,6 +99,7 @@ autocmd BufNewFile,BufRead *.ejs set filetype=html " EJS template
 autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
 autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
+autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 
 " Tab setting exceptions
 autocmd Filetype javascript setlocal expandtab ts=2 sw=2 sts=2
@@ -119,22 +121,8 @@ function! SetJsHi()
 endfunction
 autocmd BufNewFile,BufRead *.js call SetJsHi()
 
-" #### Omnicomplete ##############################
-
-" Turn on omnicomplete
-set omnifunc=syntaxcomplete#Complete
+" complete option
 set completeopt=longest,menuone
-autocmd BufNewFile,BufRead,BufEnter *.c,*.cc,*.cpp,*.h,*.hh,*.hpp set omnifunc=omni#cpp#complete#Main
-
-" Omnicomplete settings
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 " #### Plugins ###################################
 
@@ -179,6 +167,11 @@ let g:formatter_yapf_style = 'pep8'
 " ocamlmerlin
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+" clang_complete
+let g:clang_library_path = '/usr/lib/x86_64-linux-gnu/libclang-7.so.1'
+" Turn off automatic completetion and it triggers when type <C-x><C-o>
+let g:clang_complete_auto = 0
 
 " #### Coloring ##################################
 
@@ -332,3 +325,7 @@ set hidden
 let g:racer_cmd = "$HOME/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
+
+" make ctags tailored to c++
+noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
