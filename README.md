@@ -29,3 +29,8 @@
 <ul>
   <li> Just kill the process </li>
 </ul>
+
+#### Setup dev-only
+<ul>
+  <li> ./dev-setup.sh </li>
+</ul>
