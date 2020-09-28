@@ -9,6 +9,7 @@
     lg = log --graph --pretty=format:'%C(yellow)%h%C(auto)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an> %Creset'
     lga = log --all --graph --pretty=format:'%C(yellow)%h%C(auto)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an> %Creset'
     lb = log --oneline --graph --decorate --simplify-by-decoration --all
+    files = !sh -c 'git diff-tree --no-commit-id --name-only -r $1' -
     s = status
     sv = diff --cached
     c = checkout
