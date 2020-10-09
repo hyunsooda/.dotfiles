@@ -113,3 +113,8 @@ dus () {
 count() {
     ls -l | grep ^- | wc -ll
 }
+
+# tmux utils
+tmw () { # tmux move window
+    tmux move-window -t $1
+}
