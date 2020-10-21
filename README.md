@@ -34,3 +34,9 @@
 <ul>
   <li> ./dev-setup.sh </li>
 </ul>
+
+#### Apt Mirror
+<ul>
+    <li> ./apt-mirror-kakao.sh </li>
+    <li> Error Reference: https://askubuntu.com/questions/760896/how-can-i-fix-apt-error-w-target-packages-is-configured-multiple-times </li>
+</ul>
