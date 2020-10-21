@@ -20,9 +20,9 @@
 
 ## Troubleshooting
 
-#### To fix color changing when using tmux
+#### To fix color changing unexpectedly when using tmux
 <ul>
-  <li> tmux -2 </li>
+  <li> `tmux -2` </li>
 </ul>
 
 #### To fix when docker linuxkit is stuck (only MacOS)
@@ -32,11 +32,11 @@
 
 #### Setup dev-only
 <ul>
-  <li> ./dev-setup.sh </li>
+  <li> `./dev-setup.sh` </li>
 </ul>
 
 #### Apt Mirror
 <ul>
-    <li> ./apt-mirror-kakao.sh </li>
+    <li> `./apt-mirror-kakao.sh` </li>
     <li> Error Reference: https://askubuntu.com/questions/760896/how-can-i-fix-apt-error-w-target-packages-is-configured-multiple-times </li>
 </ul>
