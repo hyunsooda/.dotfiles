@@ -57,6 +57,7 @@ Plug 'sbdchd/neoformat'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'xavierd/clang_complete'
+Plug 'robbles/logstash.vim'
 
 call plug#end()
 
@@ -170,7 +171,6 @@ execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 " clang_complete
 let g:clang_library_path = '/usr/lib/x86_64-linux-gnu/libclang-7.so.1'
-" Turn off automatic completetion and it triggers when type <C-x><C-o>
 let g:clang_complete_auto = 0
 
 " #### Coloring ##################################
