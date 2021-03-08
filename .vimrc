@@ -29,7 +29,6 @@ Plug 'ervandew/supertab'
 " Snippet autocomplete
 Plug 'MarcWeber/vim-addon-mw-utils' " dependency
 Plug 'tomtom/tlib_vim' " dependency
-Plug 'garbas/vim-snipmate' " driver
 Plug 'honza/vim-snippets' " snippet database
 
 " Head-up display (HUD)
@@ -58,6 +57,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'xavierd/clang_complete'
 Plug 'robbles/logstash.vim'
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
 
 call plug#end()
 
