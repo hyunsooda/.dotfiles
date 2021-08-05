@@ -55,7 +55,6 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'sbdchd/neoformat'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
-Plug 'xavierd/clang_complete'
 Plug 'robbles/logstash.vim'
 Plug 'fsharp/vim-fsharp', {
       \ 'for': 'fsharp',
@@ -81,7 +80,6 @@ set scrolloff=3   " Keep 3 lines above and below cursor.
 set laststatus=2  " Always turn on status line
 set backspace=indent,eol,start  " Make backspace work as other editors
 set tags=~/.vim/tags,tag;    " Read local tags file
-"set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/lib/clangml/tags;    " Read local tags file
 "set tags=~/.vim/tags,tag,~/.opam/sparrow-4.08.0+flambda/tags;    " Read local tags file
 
 " #### File type specific ########################
@@ -104,6 +102,16 @@ autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
 autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
+
+" Teach vim to syntax highlight Vagrantfile as ruby
+"
+" Install: $HOME/.vim/plugin/vagrant.vim
+" Author: Brandon Philips <brandon@ifup.org>
+
+augroup vagrant
+  au!
+  au BufRead,BufNewFile Vagrantfile set filetype=ruby
+augroup END
 
 " Tab setting exceptions
 autocmd Filetype javascript setlocal expandtab ts=2 sw=2 sts=2
@@ -171,10 +179,6 @@ let g:formatter_yapf_style = 'pep8'
 " ocamlmerlin
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
-
-" clang_complete
-let g:clang_library_path = '/usr/lib/x86_64-linux-gnu/libclang-7.so.1'
-let g:clang_complete_auto = 0
 
 " #### Coloring ##################################
 
@@ -313,13 +317,6 @@ let g:neoformat_ocaml_ocamlformat = {
             \ 'args': ['--disable-outside-detected-project', '--name', '"%:p"', '-']
             \ }
 let g:neoformat_enabled_ocaml = ['ocamlformat']
-
-let g:neoformat_cpp_clangformat = {
-            \ 'exe': 'clang-format-6.0',
-            \ 'args': ['--style="{BasedOnStyle: google, IndentWidth: 8, AccessModifierOffset: -4}"'],
-            \ }
-let g:neoformat_enabled_cpp = ['clang-format-6.0']
-let g:neoformat_enabled_c = ['clang-format-6.0']
 
 let g:rustfmt_autosave = 1
 
