@@ -9,3 +9,8 @@
     main-head = cyan default bold
     main-ref = green default bold
     main-remote = red default bold
+[core]
+	pager = cat
+[user]
+	email = hyunsooda@kaist.ac.kr
+	name = Hyunsoo Shin
