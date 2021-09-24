@@ -1,0 +1,93 @@
+[battery]
+full_symbol = "🔋"
+charging_symbol = "🔌"
+discharging_symbol = "⚡"
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+
+[character]
+error_symbol = "[✗](bold red) "
+
+[cmd_duration]
+min_time = 2_000
+format = " took [$duration]($style)"
+
+[directory]
+truncation_length = 5
+format = "[$path](fg:#4285f4)[$lock_symbol]($lock_style) "
+
+[git_branch]
+format = " [$branch]($style) "
+style = "fg:#EF7C8E"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+
+[git_status]
+conflicted = "⚔️ ${count} "
+ahead = "[[⇡](#F8D210)×${count}]($style) "
+behind = "[[⇣](#F8D210)×${count}]$(style) "
+diverged = "[[⇡](#F8D210)×${ahead_count} [⇣](#F8D210)×${behind_count}]($style) "
+untracked = "🐾×${count} "
+stashed = "📦 "
+modified = "📝×${count} "
+staged = "●×${count} "
+renamed = "»×${count} "
+deleted = "🗑️×${count} "
+style = "bright-white"
+format = '\[$all_status$ahead_behind\]'
+
+[hostname]
+ssh_only = false
+format = "<[$hostname]($style)>"
+trim_at = "-"
+style = "bold dimmed white"
+disabled = true
+
+[julia]
+format = "[$symbol$version]($style) "
+symbol = "ஃ "
+style = "bold green"
+disabled = true
+
+[memory_usage]
+format = "$symbol[${ram}( | ${swap})]($style) "
+threshold = 70
+style = "bold dimmed white"
+disabled = false
+
+[package]
+disabled = true
+
+[python]
+format = "[$symbol$version]($style) "
+style = "bold green"
+symbol = "python "
+
+[rust]
+format = "[$symbol$version]($style) "
+style = "bold green"
+disabled = true
+
+[nodejs]
+format = "[$symbol$version](#F8D210) "
+symbol = "nodejs_"
+disabled = true
+
+[golang]
+format = "[$symbol$version](#B4F8C8) "
+symbol = "golang_"
+disabled = true
+
+[vagrant]
+disabled = true
+
+[username]
+style_user = "bold dimmed blue"
+show_always = false
