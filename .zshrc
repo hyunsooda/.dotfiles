@@ -61,10 +61,10 @@ ZSH_THEME=af-magic
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  tmux
+git
+zsh-syntax-highlighting
+zsh-autosuggestions
+tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -100,14 +100,17 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
 # go env
 export GOROOT="/usr/local/go"
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/opt/openenclave/bin"
+export PKG_CONFIG_PATH="/opt/openenclave/share/pkgconfig"
+
 
 # utility functions
 dus () {
-	du -h -d 1 $* | sort -h --reverse
+    du -h -d 1 $* | sort -h --reverse
 }
 
 count() {
@@ -118,3 +121,7 @@ count() {
 tmw () { # tmux move window
     tmux move-window -t $1
 }
+
+# For starship
+export STARSHIP_CONFIG=$HOME/.dotfiles/starship.toml
+eval "$(starship init zsh)"
