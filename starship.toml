@@ -16,6 +16,7 @@ format = " took [$duration]($style)"
 
 [directory]
 truncation_length = 5
+truncate_to_repo = false
 format = "[$path](fg:#4285f4)[$lock_symbol]($lock_style) "
 
 [git_branch]
@@ -69,6 +70,7 @@ disabled = true
 format = "[$symbol$version]($style) "
 style = "bold green"
 symbol = "python "
+disabled = true
 
 [rust]
 format = "[$symbol$version]($style) "
@@ -83,6 +85,9 @@ disabled = true
 [golang]
 format = "[$symbol$version](#B4F8C8) "
 symbol = "golang_"
+disabled = true
+
+[perl]
 disabled = true
 
 [vagrant]
