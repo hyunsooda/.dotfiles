@@ -20,5 +20,6 @@ ln -s ~/.dotfiles/.gitconfig.common     ~/.gitconfig.common
 ln -s ~/.dotfiles/.gitignore            ~/.gitignore
 ln -s ~/.dotfiles/.tmux.conf            ~/.tmux.conf
 ln -s ~/.dotfiles/.zshrc                ~/.zshrc
+ln -s ~/.dotfiles/.tilix_custom.json    ~/.config/tilix/schemes/tilix_custom.json
 tmux new-session -s 123 -d && tmux source-file ~/.tmux.conf
 zsh
