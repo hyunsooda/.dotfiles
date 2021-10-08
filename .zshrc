@@ -107,6 +107,7 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/opt/openenclave/bin"
 export PKG_CONFIG_PATH="/opt/openenclave/share/pkgconfig"
 
+alias cgr="cargo run"
 
 # utility functions
 dus () {
