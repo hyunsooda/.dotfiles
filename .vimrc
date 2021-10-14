@@ -102,6 +102,7 @@ autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
 autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
+autocmd BufNewFile,BufRead *.gop set ft=rust
 
 " Teach vim to syntax highlight Vagrantfile as ruby
 "
