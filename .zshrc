@@ -110,6 +110,9 @@ export RUST_SRC_PATH=$HOME/rust/library # for rust racer
 
 alias cgr="cargo run"
 
+# tmux setting
+DISABLE_AUTO_TITLE="true" # By setting 'true', it doesn't allow to set the pane title automatically
+
 # utility functions
 dus () {
     du -h -d 1 $* | sort -h --reverse
