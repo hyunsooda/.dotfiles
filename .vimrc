@@ -1,4 +1,4 @@
-"   File structure
+" File structure
 " Vundle plugins
 " General settings
 " File type specific settings
@@ -60,6 +60,9 @@ Plug 'fsharp/vim-fsharp', {
       \ 'for': 'fsharp',
       \ 'do':  'make fsautocomplete',
       \}
+Plug 'tomlion/vim-solidity'
+Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/syntastic' "Syntastic
 
 call plug#end()
 
@@ -180,6 +183,27 @@ let g:formatter_yapf_style = 'pep8'
 " ocamlmerlin
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+
+" Syntastic (Recommended default setting)
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_quiet_messages = {"!level":  "errors",}
+
+
+" Rust
+let g:rustfmt_autosave = 1
+
+" vim-racer(Rust Auto-Complete-er)
+set hidden
+let g:racer_cmd = "$HOME/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
 
 " #### Coloring ##################################
 
@@ -319,21 +343,6 @@ let g:neoformat_ocaml_ocamlformat = {
             \ }
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 
-let g:rustfmt_autosave = 1
-
-" vim-racer(Rust Auto-Complete-er)
-set hidden
-let g:racer_cmd = "$HOME/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
-let g:racer_insert_paren = 1
-
 " make ctags tailored to c++
 noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-
-inoremap " ""<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
