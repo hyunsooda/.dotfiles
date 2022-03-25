@@ -8,17 +8,8 @@
 - zshrc
 - Dockerfile
 - ctags_setup
-
-#### Tool
-- iTerm 2
-
-## Troubleshooting
-
-#### To fix color changing unexpectedly when using tmux
-- `tmux -2`
-
-#### To fix when docker linuxkit is stuck (only MacOS)
-- Just kill the process
+- starship
+- fusuma
 
 #### Setup dev-only
 - `./dev-setup.sh`
