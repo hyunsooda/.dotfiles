@@ -98,7 +98,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# fuzzy-finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# autojump
+[[ -s ~/.autojump/etc/profile.d/autojump.sh  ]] && source ~/.autojump/etc/profile.d/autojump.sh
 
 
 # go env
