@@ -119,6 +119,8 @@ alias cgb="cargo build"
 alias cgf="cargo fuzz run"
 alias cge="cargo expand"
 
+alias ls="exa"
+
 # tmux setting
 DISABLE_AUTO_TITLE="true" # By setting 'true', it doesn't allow to set the pane title automatically
 
