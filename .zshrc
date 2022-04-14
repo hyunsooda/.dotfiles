@@ -118,6 +118,7 @@ alias cgc="cargo check"
 alias cgb="cargo build"
 alias cgf="cargo fuzz run"
 alias cge="cargo expand"
+alias cgi="cargo install"
 
 alias ls="exa"
 
