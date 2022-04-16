@@ -10,6 +10,7 @@
 - ctags_setup
 - starship
 - fusuma
+- polybar
 
 #### Setup dev-only
 - `./dev-setup.sh`
