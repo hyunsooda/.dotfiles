@@ -14,12 +14,15 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 # install dotfiles
 rm -f ~/.zshrc
 git clone https://github.com/hyunsooda/config.git ~/.dotfiles
-ln -s ~/.dotfiles/.vimrc                ~/.vimrc
-ln -s ~/.dotfiles/.gitconfig            ~/.gitconfig
-ln -s ~/.dotfiles/.gitconfig.common     ~/.gitconfig.common
-ln -s ~/.dotfiles/.gitignore            ~/.gitignore
-ln -s ~/.dotfiles/.tmux.conf            ~/.tmux.conf
-ln -s ~/.dotfiles/.zshrc                ~/.zshrc
-ln -s ~/.dotfiles/.tilix_custom.json    ~/.config/tilix/schemes/tilix_custom.json
+
+ln -s ~/.dotfiles/fusuma                    ~/.config/fusuma
+ln -s ~/.dotfiles/alacritty                 ~/.config/alacritty
+ln -s ~/.dotfiles/.vimrc                    ~/.vimrc
+ln -s ~/.dotfiles/.gitconfig                ~/.gitconfig
+ln -s ~/.dotfiles/.gitconfig.common         ~/.gitconfig.common
+ln -s ~/.dotfiles/.gitignore                ~/.gitignore
+ln -s ~/.dotfiles/.tmux.conf                ~/.tmux.conf
+ln -s ~/.dotfiles/.zshrc                    ~/.zshrc
+ln -s ~/.dotfiles/.tilix_custom.json        ~/.config/tilix/schemes/tilix_custom.json
 tmux new-session -s 123 -d && tmux source-file ~/.tmux.conf
 zsh
