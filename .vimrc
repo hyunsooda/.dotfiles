@@ -63,6 +63,7 @@ Plug 'fsharp/vim-fsharp', {
 Plug 'tomlion/vim-solidity'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic' "Syntastic
+Plug 'cespare/vim-toml'
 
 call plug#end()
 
