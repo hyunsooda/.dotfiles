@@ -108,6 +108,9 @@ autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 autocmd BufNewFile,BufRead *.gop set ft=rust
 
+" dosini syntax apply to *.conf
+au BufEnter,BufRead *.conf setf dosini
+
 " Teach vim to syntax highlight Vagrantfile as ruby
 "
 " Install: $HOME/.vim/plugin/vagrant.vim
