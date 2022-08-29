@@ -64,6 +64,7 @@ Plug 'tomlion/vim-solidity'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic' "Syntastic
 Plug 'cespare/vim-toml'
+Plug 'souffle-lang/souffle.vim'
 
 call plug#end()
 
@@ -107,6 +108,7 @@ autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
 autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 autocmd BufNewFile,BufRead *.gop set ft=rust
+autocmd BufNewFile,BufRead *.goir set ft=go
 
 " dosini syntax apply to *.conf
 au BufEnter,BufRead *.conf setf dosini
@@ -180,7 +182,8 @@ let g:flake8_show_in_gutter = 1
 
 " vim-go
 let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "gopls"
+let g:go_gopls_gofumpt=1
 
 let g:formatter_yapf_style = 'pep8'
 
