@@ -1,7 +1,10 @@
+################# General #################
 [include]
     path = .gitconfig.common
+
 [color]
     ui = auto
+
 [tig "color"]
     date = cyan default
     author = blue default
@@ -9,8 +12,54 @@
     main-head = cyan default bold
     main-ref = green default bold
     main-remote = red default bold
-[core]
-	pager = cat
+
 [user]
 	email = hyunsooda@kaist.ac.kr
 	name = Hyunsoo Shin
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+################# For `delta` configuration #################
+[core]
+  pager = delta
+
+[delta]
+  features = defaults unobtrusive-line-numbers decorations dark
+
+[delta "defaults"]
+  navigate = true
+  paging = auto
+  whitespace-error-style = 22 reverse
+
+[delta "unobtrusive-line-numbers"]
+    line-numbers = true
+    line-numbers-minus-style = red
+    line-numbers-plus-style = green
+    line-numbers-left-format = "{nm:>4}┊"
+    line-numbers-right-format = "{np:>4}┊"
+    line-numbers-left-style = red
+    line-numbers-right-style = green
+
+[delta "decorations"]
+    commit-style = yellow
+    commit-decoration-style = yellow box ul
+    file-style = bold blue ul
+    file-decoration-style = none
+    hunk-header-style = bold blue
+    hunk-header-decoration-style = blue box
+
+[delta "dark"]
+    line-numbers-zero-style = "#75829c"
+    minus-style = syntax "#5A4646"
+    minus-emph-style = black "#EA4335"
+    plus-style = syntax "#415541"
+    plus-emph-style = black green
+
+[delta "light"]
+    line-numbers-zero-style = "#AAAAAA"
+    minus-style = syntax "#FEEDEF"
+    plus-style = syntax "#E4FDEB"
