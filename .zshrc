@@ -121,6 +121,9 @@ alias cge="cargo expand"
 alias cgi="cargo install"
 
 alias ls="exa"
+alias cat="bat"
+
+export BAT_THEME="Coldark-Dark"
 
 # tmux setting
 DISABLE_AUTO_TITLE="true" # By setting 'true', it doesn't allow to set the pane title automatically
