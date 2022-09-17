@@ -65,6 +65,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/syntastic' "Syntastic
 Plug 'cespare/vim-toml'
 Plug 'souffle-lang/souffle.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -353,3 +355,26 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 " make ctags tailored to c++
 noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+
+" fold
+let javaScript_fold=1 "activate folding by JS syntax
+let rust_fold=1 "activate folding by JS syntax
+
+" LSP for Golang
+augroup LspGo
+  au!
+  autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'go-lang',
+      \ 'cmd': {server_info->['gopls']},
+      \ 'whitelist': ['go'],
+      \ })
+  autocmd FileType go setlocal omnifunc=lsp#complete
+augroup END
+map <F1> :LspDefinition<cr>
+map <F2> :LspReferences<cr>
+
+" Mappings for Rust
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
