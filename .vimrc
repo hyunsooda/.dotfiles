@@ -356,9 +356,14 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
-" fold
+" golang fold
+set foldmethod=syntax
+set nofoldenable
+set foldlevel=2
+
+" other languages fold
 let javaScript_fold=1 "activate folding by JS syntax
-let rust_fold=1 "activate folding by JS syntax
+let rust_fold=1
 
 " LSP for Golang
 augroup LspGo
