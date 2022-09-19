@@ -1,0 +1,5 @@
+{
+  "rust-analyzer.inlayHints.enable": false,
+  "suggest.autoTrigger": "none", // disable autocomplete suggestion
+  "signature.enable": false // disable annoying signature tooltip
+}
