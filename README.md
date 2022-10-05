@@ -25,3 +25,6 @@
 - Install `rust-analyzer` binary
 - `coc-settings.json` (confiugrable with `:CocConfig`)
 - vim configuration
+
+### C/C++ LSP
+- Compilation database generate tool(`bear`) is required for `make` base project.

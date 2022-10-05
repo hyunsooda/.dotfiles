@@ -1,5 +1,25 @@
 {
+  // Rust
   "rust-analyzer.inlayHints.enable": false,
+
+  // C/C++
+	"languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    }
+  },
+
+  // General
   "suggest.autoTrigger": "none", // disable autocomplete suggestion
   "signature.enable": false // disable annoying signature tooltip
 }
