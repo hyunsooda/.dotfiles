@@ -67,6 +67,7 @@ Plug 'cespare/vim-toml'
 Plug 'souffle-lang/souffle.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovimhaskell/haskell-vim'
 
 call plug#end()
 
@@ -383,3 +384,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Haskell setting
+let g:haskell_indent_disable=1
+let g:haskell_classic_highlighting=1
