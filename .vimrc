@@ -385,6 +385,6 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Haskell setting
-let g:haskell_indent_disable=1
-let g:haskell_classic_highlighting=1
+" Haskell formatter
+let g:neoformat_haskell_ormolu = { 'exe': 'ormolu', 'args': []  }
+let g:neoformat_enabled_haskell = ['ormolu']
