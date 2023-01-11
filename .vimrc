@@ -68,6 +68,7 @@ Plug 'souffle-lang/souffle.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovimhaskell/haskell-vim'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
