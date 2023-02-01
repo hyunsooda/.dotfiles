@@ -112,6 +112,7 @@ export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/opt/openenclave/bin"
 export PKG_CONFIG_PATH="/opt/openenclave/share/pkgconfig"
 export RUST_SRC_PATH=$HOME/rust/library # for rust racer
 
+# Cargo command alias
 alias cgr="cargo run"
 alias cgt="cargo test"
 alias cgc="cargo check"
@@ -119,6 +120,11 @@ alias cgb="cargo build"
 alias cgf="cargo fuzz run"
 alias cge="cargo expand"
 alias cgi="cargo install"
+
+# Cabal command alias
+alias cbb="cabal build ."
+alias cbr="cabal run ."
+alias cbp="cabal repl"
 
 alias ls="exa"
 alias cat="bat"
@@ -145,3 +151,9 @@ tmw () { # tmux move window
 # For starship
 export STARSHIP_CONFIG=$HOME/.dotfiles/starship.toml
 eval "$(starship init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -f "/home/hyunsoo/.ghcup/env" ] && source "/home/hyunsoo/.ghcup/env" # ghcup-env
