@@ -126,6 +126,17 @@ alias cbb="cabal build ."
 alias cbr="cabal run ."
 alias cbp="cabal repl"
 
+# Stack command alias
+alias sb="stack build"
+alias sr="stack repl"
+
+# Nix command alias
+alias ns="nix-shell"
+alias nsz="nix-shell --run zsh"
+
+# Docker command alias
+alias dc="docker compose" # Compose V2
+
 alias ls="exa"
 alias cat="bat"
 

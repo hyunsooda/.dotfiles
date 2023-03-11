@@ -69,6 +69,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovimhaskell/haskell-vim'
 Plug 'tpope/vim-commentary'
+Plug 'LnL7/vim-nix' " nix expression
 
 call plug#end()
 
