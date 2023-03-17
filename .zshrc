@@ -129,6 +129,7 @@ alias cbp="cabal repl"
 # Stack command alias
 alias sb="stack build"
 alias sr="stack repl"
+alias st="stack test"
 
 # Nix command alias
 alias ns="nix-shell"
@@ -136,6 +137,9 @@ alias nsz="nix-shell --run zsh"
 
 # Docker command alias
 alias dc="docker compose" # Compose V2
+
+# Hardhat command alias
+alias hh="npx hardhat"
 
 alias ls="exa"
 alias cat="bat"
