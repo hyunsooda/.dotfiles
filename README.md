@@ -11,6 +11,7 @@
 - starship
 - fusuma
 - polybar
+- kime
 
 #### Setup dev-only
 - `./dev-setup.sh`
