@@ -26,6 +26,6 @@ ln -s ~/.dotfiles/.zshrc                    ~/.zshrc
 ln -s ~/.dotfiles/.tilix_custom.json        ~/.config/tilix/schemes/tilix_custom.json
 ln -s ~/.dotfiles/coc-settings.json         ~/.vim/coc-settings.json
 mkdir -p ~/.config/kime && ln -s ~/.dotfiles/kime/config.yaml ~/.config/kime/config.yaml
-mkdir -p ~/.config/nvim && ln -s ~/.dotfiles/nvim
+mkdir -p ~/.config/nvim && ln -s ~/.dotfiles/nvim ~/.config/nvim
 tmux new-session -s 123 -d && tmux source-file ~/.tmux.conf
 zsh
