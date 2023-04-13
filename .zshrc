@@ -146,6 +146,8 @@ alias cat="bat"
 
 export BAT_THEME="Coldark-Dark"
 
+alias vi="nvim"
+
 # tmux setting
 DISABLE_AUTO_TITLE="true" # By setting 'true', it doesn't allow to set the pane title automatically
 
