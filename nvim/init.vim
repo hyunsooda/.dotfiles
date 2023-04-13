@@ -23,6 +23,9 @@ Plug 'crusoexia/vim-monokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
+" Autocomplete with tab key
+Plug 'ervandew/supertab'
+
 " Head-up display (HUD)
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
