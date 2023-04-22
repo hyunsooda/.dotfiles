@@ -85,6 +85,7 @@ Plug 'simrat39/rust-tools.nvim'
 call plug#end()
 
 " #### General ###################################
+set mouse=
 set clipboard=unnamed " use OS clipboard
 set tabstop=4
 set shiftwidth=4
