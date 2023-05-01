@@ -1,4 +1,9 @@
 # Don't use tab in editing
+
+# This configuration is intended for Ubuntu 22.04 LTS. Before applying it, please complete the following prerequisite:
+# 1. Open `libgnome-shell.so` by running the command `sudo vi /usr/lib/gnome-shell/libgnome-shell.so`.
+# 2. Locate the line `const GESTURE_FINGER_COUNT = 3;` and change the value from `3` to `4`.
+
 swipe:
   3:
     left:
@@ -6,18 +11,12 @@ swipe:
     right:
       command: 'xdotool key ctrl+Page_Up'
     up:
-      command: 'xdotool key super'
+      command: 'xdotool key alt+Right'
+    down:
+      command: 'xdotool key alt+Left'
+  4:
     down:
       command: 'xdotool key ctrl+w'
-  4:
-    left:
-      command: 'xdotool key alt+Left'
-    right:
-      command: 'xdotool key alt+Right'
-    up:
-      command: 'xdotool key ctrl+alt+Down'
-    down:
-      command: 'xdotool key ctrl+alt+Up'
 pinch:
   in:
     command: 'xdotool key ctrl+plus'
