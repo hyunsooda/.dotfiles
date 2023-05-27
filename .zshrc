@@ -128,7 +128,7 @@ alias cbp="cabal repl"
 
 # Stack command alias
 alias sb="stack build"
-alias sr="stack repl"
+alias sr="stack run"
 alias st="stack test"
 
 # Nix command alias
