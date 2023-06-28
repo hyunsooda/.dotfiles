@@ -61,6 +61,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'tpope/vim-commentary'
 Plug 'LnL7/vim-nix' " nix expression
+Plug 'APZelos/blamer.nvim' " gitlens
 
 " For NVIM configuration
 Plug 'neovim/nvim-lspconfig'
@@ -364,6 +365,9 @@ let g:tagbar_type_haskell = {
     \ }
 \ }
 
+let g:blamer_enabled = 1
+let g:blamer_delay = 100
+let g:blamer_date_format = '%y/%m/%d'
 
 " Core plugin configuration (lua)
 lua << EOF
