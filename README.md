@@ -20,8 +20,8 @@
 - `./apt-mirror-kakao.sh`
 - Error Reference: https://askubuntu.com/questions/760896/how-can-i-fix-apt-error-w-target-packages-is-configured-multiple-times
 
-### Rust LSP (Troubble shoutting)
-With the enable of `rust-analyzier` LSP, annoying syntax highlight turned on.
+### Rust LSP (Troubleshooting)
+With the help of rust-analyzier LSP, the annoying syntax highlight feature turned on automatically.
 To disable it, refer to [this](https://github.com/simrat39/rust-tools.nvim/issues/365)
 
 
