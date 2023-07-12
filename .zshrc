@@ -157,7 +157,7 @@ dus () {
 }
 
 count() {
-    ls -l | grep ^- | wc -ll
+    ls -l | wc -ll
 }
 
 # tmux utils
