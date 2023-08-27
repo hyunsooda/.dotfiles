@@ -427,8 +427,11 @@ local rs_opts = {
     inlay_hints = {
       auto = true,
       show_parameter_hints = false,
-      parameter_hints_prefix = "",
-      other_hints_prefix = "",
+      parameter_hints_prefix = "<- ",
+      other_hints_prefix = "=> ",
+      max_len_align = false,
+      right_align = false,
+      right_align_padding = 7,
     },
   },
 
