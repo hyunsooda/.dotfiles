@@ -174,3 +174,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f "/home/hyunsoo/.ghcup/env" ] && source "/home/hyunsoo/.ghcup/env" # ghcup-env
+
+# walk (terminal nevigator)
+export EDITOR=nvim
+function lk {
+  cd "$(walk "$@")"
+}
