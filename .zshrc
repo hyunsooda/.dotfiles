@@ -141,7 +141,7 @@ alias dc="docker compose" # Compose V2
 # Hardhat command alias
 alias hh="npx hardhat"
 
-alias ls="exa"
+alias ls="eza"
 alias cat="bat"
 
 export BAT_THEME="Coldark-Dark"
