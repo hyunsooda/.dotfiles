@@ -1,0 +1,58 @@
+[colors.bright]
+black = "#5F6368"
+blue = "#4285F4"
+cyan = "#24C1E0"
+green = "#34A853"
+magenta = "#A142F4"
+red = "#EA4335"
+white = "#FFFFFF"
+yellow = "#FBBC05"
+
+[colors.cursor]
+cursor = "#E8EAED"
+text = "#202124"
+
+[colors.normal]
+black = "#202124"
+blue = "#4285F4"
+cyan = "#24C1E0"
+green = "#34A853"
+magenta = "#A142F4"
+red = "#EA4335"
+white = "#E8EAED"
+yellow = "#FBBC04"
+
+[colors.primary]
+background = "0x282828"
+foreground = "#E8EAED"
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "monospace"
+
+[[keyboard.bindings]]
+action = "Down"
+key = 28
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Last"
+key = 5
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "FirstOccupied"
+key = 7
+mode = "Vi|~Search"
+mods = "Shift"
+
+[shell]
+args = ["-c", "neofetch && zsh"]
+program = "/bin/bash"
+
+[window.dimensions]
+columns = 100
+lines = 50
