@@ -27,8 +27,8 @@ background = "0x282828"
 foreground = "#E8EAED"
 
 [font]
-# size = 10.75
-size = 11.75
+# size = 10.75 # 40 inch monitor
+size = 11.75   # 43 inch monitor
 
 [font.normal]
 family = "monospace"
