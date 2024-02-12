@@ -27,7 +27,8 @@ background = "0x282828"
 foreground = "#E8EAED"
 
 [font]
-size = 13.0
+# size = 10.75
+size = 11.75
 
 [font.normal]
 family = "monospace"
@@ -52,3 +53,10 @@ mods = "Shift"
 [window.dimensions]
 columns = 100
 lines = 50
+
+[window]
+decorations = "none"
+
+[shell]
+args = ["-c", "neofetch && zsh"]
+program = "/bin/bash"
