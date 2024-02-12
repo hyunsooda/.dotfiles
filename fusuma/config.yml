@@ -15,13 +15,18 @@ swipe:
     down:
       command: 'xdotool key alt+Left'
   4:
+    left:
+      command: 'xdotool key ctrl+alt+Right'
+    right:
+      command: 'xdotool key ctrl+alt+Left'
     down:
       command: 'xdotool key ctrl+w'
 pinch:
-  in:
-    command: 'xdotool key ctrl+plus'
-  out:
-     command: 'xdotool key ctrl+minus'
+  2:
+    in:
+      command: 'xdotool key ctrl+minus'
+    out:
+      command: 'xdotool key ctrl+plus'
 
 threshold:
   swipe: 0.4
