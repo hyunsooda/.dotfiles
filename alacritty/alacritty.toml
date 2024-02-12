@@ -49,10 +49,6 @@ key = 7
 mode = "Vi|~Search"
 mods = "Shift"
 
-[shell]
-args = ["-c", "neofetch && zsh"]
-program = "/bin/bash"
-
 [window.dimensions]
 columns = 100
 lines = 50
