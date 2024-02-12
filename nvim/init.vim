@@ -6,6 +6,27 @@
 " Plugin settings
 " Keyboard shortcuts
 
+
+"setup vim-plug {{{
+
+  "Note: install vim-plug if not present
+  if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+  endif
+
+  "Note: Skip initialization for vim-tiny or vim-small.
+  if !1 | finish | endif
+  if has('vim_starting')
+    set nocompatible               " Be iMproved
+    " Required:
+    call plug#begin()
+  endif
+
+"}}}
+
+
+
 " #### Vim Plugins ############################
 set nocompatible  " it must be the first line to enable Vim features.
 
@@ -83,6 +104,17 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'simrat39/rust-tools.nvim'
 
+"Coq
+Plug 'whonore/Coqtail'
+Plug 'tomtomjhj/coq-lsp.nvim'
+Plug 'tpope/vim-endwise'
+Plug 'joom/latex-unicoder.vim'
+
+"Circom
+Plug 'iden3/vim-circom-syntax'
+
+"Just
+Plug 'NoahTheDuke/vim-just'
 
 call plug#end()
 
@@ -369,6 +401,9 @@ let g:tagbar_type_haskell = {
 let g:blamer_enabled = 1
 let g:blamer_delay = 300
 let g:blamer_date_format = '%y/%m/%d'
+
+" Setup coq-lsp.nvim
+lua require'coq-lsp'.setup()
 
 " Core plugin configuration (lua)
 lua << EOF
