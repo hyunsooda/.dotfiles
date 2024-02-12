@@ -4,26 +4,23 @@
 - gitconfigs
 - gitignore
 - tmux.conf
-- vimrc
+- nvim
 - zshrc
 - Dockerfile
 - ctags_setup
 - starship
 - fusuma
 - polybar
-- kime
+- clipmenu (clipnotify)
 
 #### Setup dev-only
 - `./dev-setup.sh`
 
-#### Apt Mirror
-- `./apt-mirror-kakao.sh`
-- Error Reference: https://askubuntu.com/questions/760896/how-can-i-fix-apt-error-w-target-packages-is-configured-multiple-times
+### custom bin, conf, and sound
+- dmenu-distrotube
+- dmscripts
+- dtos-sounds
 
 ### Rust LSP (Troubleshooting)
 With the help of rust-analyzier LSP, the annoying syntax highlight feature turned on automatically.
 To disable it, refer to [this](https://github.com/simrat39/rust-tools.nvim/issues/365)
-
-
-### C/C++ LSP
-- Compilation database generate tool(`bear`) is required for `make` base project.
