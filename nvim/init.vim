@@ -116,6 +116,15 @@ Plug 'iden3/vim-circom-syntax'
 "Just
 Plug 'NoahTheDuke/vim-just'
 
+"Wasm
+Plug 'rhysd/vim-wasm'
+
+"Typst
+Plug 'kaarmu/typst.vim'
+
+"Typescript
+Plug 'leafgarland/typescript-vim'
+
 call plug#end()
 
 " #### General ###################################
