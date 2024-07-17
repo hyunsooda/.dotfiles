@@ -125,6 +125,9 @@ Plug 'kaarmu/typst.vim'
 "Typescript
 Plug 'leafgarland/typescript-vim'
 
+" HCL
+Plug 'jvirtanen/vim-hcl'
+
 call plug#end()
 
 " #### General ###################################
