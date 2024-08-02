@@ -249,6 +249,7 @@ let g:formatter_yapf_style = 'pep8'
 let g:rustfmt_autosave = 1
 
 " #### Coloring ##################################
+let g:seoul256_background = 234
 set t_Co=256
 set bg=dark
 silent! colorscheme seoul256

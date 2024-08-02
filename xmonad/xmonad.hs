@@ -88,7 +88,7 @@ import Colors.DoomOne
 myFont :: String
 -- myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=20:antialias=true:hinting=true"
 -- myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=15:antialias=true:hinting=true"
-myFont  = "xft:NanumGothic:size=15:regular:antialias=true:hinting=true"
+myFont  = "xft:NanumGothic:size=20:regular:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
@@ -118,13 +118,11 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce (mySoundPlayer ++ startupSound)
   spawn "killall conky"                    -- kill current conky on each restart
-  spawn "killall xmobar" -- adding this in case of switching between xmobar and polybar.
-  spawn "killall trayer" -- adding this in case of switching between xmobar and polybar.
 
   spawnOnce "fusuma"
   spawnOnce "xrdb ~/.Xresources"
-  spawnOnce "xinput set-prop 14 318 1" -- enable tab to click
-  spawnOnce "xinput set-prop 14 326 1" -- enable natural drag
+  spawnOnce "xinput set-prop 11 319 1" -- enable tab to click
+  spawnOnce "xinput set-prop 11 327 1" -- enable natural drag
   spawnOnce "xrandr --output eDP-1 --off" -- turn off builtin monitor
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
