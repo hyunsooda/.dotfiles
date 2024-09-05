@@ -427,7 +427,7 @@ myLayoutHook = avoidStruts
 
 
 -- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
-myWorkspaces = ["1: Klaytn-1", "2: Klaytn-2", "3: PL-1", "4: PL-2", "5: Logic-1", "6: Logic-2", "7: None", "8: None ", "Temp "]
+myWorkspaces = ["1: Kaia-1", "2: Kaia-2", "3: Kaia-3", "4: PL-1", "5: PL-2", "6: PL-3", "7: #Random-1", "8: #Random-2 ", "9: #Random-3"]
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
