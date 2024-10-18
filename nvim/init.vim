@@ -128,6 +128,12 @@ Plug 'leafgarland/typescript-vim'
 " HCL
 Plug 'jvirtanen/vim-hcl'
 
+" Huff
+Plug 'marktoda/vim-huff'
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
 call plug#end()
 
 " #### General ###################################
@@ -173,6 +179,7 @@ autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 autocmd BufNewFile,BufRead *.gop set ft=rust
 autocmd BufNewFile,BufRead *.goir set ft=go
+autocmd BufNewFile,BufRead *.fe set ft=rust
 
 " dosini syntax apply to *.conf
 au BufEnter,BufRead *.conf setf dosini
