@@ -17,7 +17,7 @@ format = " took [$duration]($style)"
 [directory]
 truncation_length = 5000
 truncate_to_repo = false
-format = "[$path](fg:#4285f4)[$lock_symbol]($lock_style) "
+format = "LAPTOP [$path](fg:#4285f4)[$lock_symbol]($lock_style) "
 
 [git_branch]
 format = " [$branch]($style) "
