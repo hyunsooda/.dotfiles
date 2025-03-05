@@ -211,14 +211,37 @@ fi
 export STARSHIP_CONFIG=$HOME/.dotfiles/starship.toml
 eval "$(starship init zsh)"
 
+# For direnv
+eval "$(direnv hook zsh)"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[ -f "/home/hyunsoo/.ghcup/env" ] && source "/home/hyunsoo/.ghcup/env" # ghcup-env
 
 # walk (terminal nevigator)
 export EDITOR=nvim
 function lk {
   cd "$(walk "$@")"
 }
+
+[ -f "/home/hyunsoo/.ghcup/env" ] && . "/home/hyunsoo/.ghcup/env" # ghcup-env
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/hyunsoo/.opam/opam-init/init.zsh' ]] || source '/home/hyunsoo/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+export PATH="$PATH:/home/hyunsoo/.huff/bin"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# z
+. ~/.dotfiles/z/z.sh
