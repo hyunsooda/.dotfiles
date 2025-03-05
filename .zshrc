@@ -65,6 +65,7 @@ git
 zsh-syntax-highlighting
 zsh-autosuggestions
 tmux
+z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -243,5 +244,5 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-# z
-. ~/.dotfiles/z/z.sh
+# # z
+# . ~/.dotfiles/z/z.sh
