@@ -521,25 +521,38 @@ cmp.setup {
 }
 
 
-require'coq-lsp'.setup {
-  -- The configuration for coq-lsp.nvim.
-  -- The following is the default configuration.
-  coq_lsp_nvim = {
-    -- to be added
-  },
+require('lspconfig').clangd.setup {
+  cmd = { "clangd", "--background-index" },
+  on_attach = function(client, bufnr)
+    client.server_capabilities.semanticTokensProvider = nil
 
-  -- The configuration forwarded to `:help lspconfig-setup`.
-  -- The following is an example.
-  lsp = {
-    on_attach = function(client, bufnr)
-      -- your mappings, etc
-    end,
-    -- coq-lsp server initialization configurations, defined here:
-    -- https://github.com/ejgallego/coq-lsp/blob/main/editor/code/src/config.ts#L3
-    -- Documentations are at https://github.com/ejgallego/coq-lsp/blob/main/editor/code/package.json.
-    init_options = {
-      show_notices_as_diagnostics = true,
-    },
-    autostart = false, -- use this if you want to manually launch coq-lsp with :LspStart.
-  },
+    local bufmap = function(lhs, rhs)
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', lhs, rhs, { noremap = true, silent = true })
+    end
+    bufmap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+    bufmap('gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+  end,
 }
+
+-- require'coq-lsp'.setup {
+--   -- The configuration for coq-lsp.nvim.
+--   -- The following is the default configuration.
+--   coq_lsp_nvim = {
+--     -- to be added
+--   },
+
+--   -- The configuration forwarded to `:help lspconfig-setup`.
+--   -- The following is an example.
+--   lsp = {
+--     on_attach = function(client, bufnr)
+--       -- your mappings, etc
+--     end,
+--     -- coq-lsp server initialization configurations, defined here:
+--     -- https://github.com/ejgallego/coq-lsp/blob/main/editor/code/src/config.ts#L3
+--     -- Documentations are at https://github.com/ejgallego/coq-lsp/blob/main/editor/code/package.json.
+--     init_options = {
+--       show_notices_as_diagnostics = true,
+--     },
+--     autostart = false, -- use this if you want to manually launch coq-lsp with :LspStart.
+--   },
+-- }
