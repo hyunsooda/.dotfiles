@@ -154,6 +154,15 @@ alias vi="nvim"
 
 alias k="kubectl"
 
+alias cursor="/opt/cursor.appimage --no-sandbox"
+
+# justfile
+alias jb="just build"
+alias jt="just test"
+alias jr="just run"
+
+alias gk='ginkgo'
+
 # tmux setting
 DISABLE_AUTO_TITLE="true" # By setting 'true', it doesn't allow to set the pane title automatically
 
@@ -243,3 +252,7 @@ export PATH="$PATH:/home/hyunsoo/.huff/bin"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+[[ -s "/home/hyunsoo/.gvm/scripts/gvm" ]] && source "/home/hyunsoo/.gvm/scripts/gvm"
+
+alias psqlh="psql --host=localhost"
