@@ -104,9 +104,10 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'simrat39/rust-tools.nvim'
 
+" TODO: usage will be refined later
 "Coq
-Plug 'whonore/Coqtail'
-Plug 'tomtomjhj/coq-lsp.nvim'
+" Plug 'whonore/Coqtail'
+" Plug 'tomtomjhj/coq-lsp.nvim'
 Plug 'tpope/vim-endwise'
 Plug 'joom/latex-unicoder.vim'
 
@@ -133,6 +134,11 @@ Plug 'marktoda/vim-huff'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
+" Verilog
+Plug 'WeiChungWu/vim-SystemVerilog'
+
+Plug 'mfukar/robotframework-vim'
 
 call plug#end()
 
@@ -171,7 +177,6 @@ autocmd BufNewFile,BufRead gitconfig.common set filetype=gitconfig
 autocmd BufNewFile,BufRead vimrc set filetype=vim
 autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 autocmd BufNewFile,BufRead *.md set filetype=markdown
-autocmd BufNewFile,BufRead *.ts set filetype=javascript " TypeScript
 autocmd BufNewFile,BufRead *.ejs set filetype=html " EJS template
 autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
@@ -180,6 +185,7 @@ autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 autocmd BufNewFile,BufRead *.gop set ft=rust
 autocmd BufNewFile,BufRead *.goir set ft=go
 autocmd BufNewFile,BufRead *.fe set ft=rust
+autocmd BufNewFile,BufRead *.v set ft=verilog
 
 " dosini syntax apply to *.conf
 au BufEnter,BufRead *.conf setf dosini
@@ -195,6 +201,7 @@ augroup vagrant
 augroup END
 
 " Tab setting exceptions
+autocmd Filetype typescript setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype javascript setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype css setlocal expandtab ts=2 sw=2 sts=2
 autocmd Filetype html setlocal expandtab ts=2 sw=2 sts=2
@@ -268,7 +275,7 @@ hi GitGutterChange ctermbg=none
 hi GitGutterDelete ctermbg=none
 hi GitGutterChangeDelete ctermbg=none
 
-" Color 80th column
+"Color 80th column
 function! s:toggle_color_column()
     if &colorcolumn > 0
         set colorcolumn=
@@ -422,8 +429,9 @@ let g:blamer_enabled = 1
 let g:blamer_delay = 300
 let g:blamer_date_format = '%y/%m/%d'
 
+" TODO: usage will be refined later
 " Setup coq-lsp.nvim
-lua require'coq-lsp'.setup()
+" lua require'coq-lsp'.setup()
 
 " Core plugin configuration (lua)
 lua << EOF
