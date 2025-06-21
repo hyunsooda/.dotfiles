@@ -27,10 +27,14 @@ pinch:
       command: 'xdotool key ctrl+minus'
     out:
       command: 'xdotool key ctrl+plus'
+hold:
+  3:
+    command: 'xdotool keydown Control_L click 1 keyup Control_L'
 
 threshold:
   swipe: 0.4
   pinch: 0.4
+  hold: 0
 
 interval:
   swipe: 0.8
