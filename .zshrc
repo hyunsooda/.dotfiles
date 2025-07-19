@@ -256,3 +256,5 @@ eval "$(pyenv init -)"
 [[ -s "/home/hyunsoo/.gvm/scripts/gvm" ]] && source "/home/hyunsoo/.gvm/scripts/gvm"
 
 alias psqlh="psql --host=localhost"
+
+alias rm="trash-put"
