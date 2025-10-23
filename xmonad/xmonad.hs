@@ -121,8 +121,8 @@ myStartupHook = do
 
   spawnOnce "fusuma"
   spawnOnce "xrdb ~/.Xresources"
-  spawnOnce "xinput set-prop 11 319 1" -- enable tab to click
-  spawnOnce "xinput set-prop 11 327 1" -- enable natural drag
+  spawnOnce "xinput set-prop 11 'libinput Tapping Enabled' 1" -- enable tap to click
+  spawnOnce "xinput set-prop 11 'libinput Natural Scrolling Enabled' 1" -- enable natural scrolling
   spawnOnce "xrandr --output eDP-1 --off" -- turn off builtin monitor
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
