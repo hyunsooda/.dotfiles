@@ -179,6 +179,7 @@ autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 autocmd BufNewFile,BufRead *.ejs set filetype=html " EJS template
 autocmd BufNewFile,BufRead *.edl set filetype=cpp " Enclave EDL
+autocmd BufNewFile,BufRead *.inc set filetype=cpp " MLIR TableGen
 autocmd BufNewFile,BufRead *.gyp set filetype=javascript " GYP build system
 autocmd BufNewFile,BufRead *.ml set filetype=ocaml " ocamlformat
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
@@ -186,6 +187,8 @@ autocmd BufNewFile,BufRead *.gop set ft=rust
 autocmd BufNewFile,BufRead *.goir set ft=go
 autocmd BufNewFile,BufRead *.fe set ft=rust
 autocmd BufNewFile,BufRead *.v set ft=verilog
+
+au BufRead,BufNewFile *.mlir set filetype=mlir
 
 " dosini syntax apply to *.conf
 au BufEnter,BufRead *.conf setf dosini
