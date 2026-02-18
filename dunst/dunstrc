@@ -1,0 +1,19 @@
+[global]
+    origin = center
+    offset = 0x0
+
+    width = 600
+    height = 300
+
+    frame_width = 3
+    frame_color = "#89B4FA"
+
+    font = Sans 17
+
+    padding = 20
+    horizontal_padding = 20
+
+    background = "#1E1E2E"
+    foreground = "#CDD6F4"
+
+    timeout = 1

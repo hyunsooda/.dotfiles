@@ -136,6 +136,7 @@ myStartupHook = do
   -- spawn ("sleep 3 && conky -c $HOME/dtos/dtos-dotfiles/.config/conky/xmonad/" ++ colorScheme ++ "-01.conkyrc")
   -- Select only =ONE= of the following four ways to set the wallpaper.
   spawnOnce "xargs xwallpaper --stretch < ~/.cache/wall"
+  spawnOnce "dunst &"
   setWMName "LG3D"
 
 myNavigation :: TwoD a (Maybe a)
@@ -653,6 +654,7 @@ myKeys c =
   ^++^ subKeys "Misc"
   [ ("M-y", addName "clipmenu"           $ spawn "clipmenu")
   , ("M-x", addName "xdg-open"           $ spawn "xdg-open .")
+  , ("M-g", addName "lang-refine"        $ spawn "lang-refine")
   ]
 
   -- The following lines are needed for named scratchpads.

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# API Key setup
+KEY_FILE="$HOME/.config/gemini/api_key"
+if [ ! -f "$KEY_FILE" ]; then
+    notify-send "Gemini Error" "API Key file not found at $KEY_FILE"
+    exit 1
+fi
+API_KEY=$(cat "$KEY_FILE" | tr -d '[:space:]')
+
+# Get text from clipboard
+RAW_TEXT=$(xclip -o -sel clipboard)
+
+# 1. Create the JSON payload safely using jq
+PROMPT="Proofread and polish this English sentence for Slack or GitHub. Fix grammar and make it natural. Return ONLY the corrected text: $RAW_TEXT"
+PAYLOAD=$(jq -n --arg msg "$PROMPT" '{contents: [{parts: [{text: $msg}]}]}')
+
+# 2. Call Gemini API
+RESPONSE=$(curl -s -H 'Content-Type: application/json' \
+     -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}" \
+     -d "$PAYLOAD")
+
+# 3. Extract result
+CORRECTED=$(echo "$RESPONSE" | jq -r '.candidates[0].content.parts[0].text // empty')
+
+# 4. Error handling
+if [ -z "$CORRECTED" ] || [ "$CORRECTED" == "null" ]; then
+    ERROR_DETAIL=$(echo "$RESPONSE" | jq -r '.error.message // "Unknown API Error"')
+    notify-send "Gemini API Error" "$ERROR_DETAIL"
+    exit 1
+fi
+
+# 5. Success
+echo -n "$CORRECTED" | xclip -sel clipboard
+notify-send "Language Refined" "$CORRECTED"
