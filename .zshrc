@@ -258,3 +258,4 @@ eval "$(pyenv init -)"
 alias psqlh="psql --host=localhost"
 
 alias rm="trash-put"
+alias cc="claude"
