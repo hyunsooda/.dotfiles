@@ -44,9 +44,6 @@ Plug 'crusoexia/vim-monokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
-" Autocomplete with tab key
-Plug 'ervandew/supertab'
-
 " Head-up display (HUD)
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
@@ -82,8 +79,13 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'tpope/vim-commentary'
 Plug 'LnL7/vim-nix' " nix expression
-Plug 'APZelos/blamer.nvim' " gitlens
+
+Plug 'lewis6991/gitsigns.nvim'
+
+
 Plug 'bohlender/vim-smt2' " SMT-LIB2 syntax
+Plug 'mrcjkb/rustaceanvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " For NVIM configuration
 Plug 'neovim/nvim-lspconfig'
@@ -138,7 +140,12 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' 
 " Verilog
 Plug 'WeiChungWu/vim-SystemVerilog'
 
+" Robot framework
 Plug 'mfukar/robotframework-vim'
+
+" Claude code
+Plug 'coder/claudecode.nvim'
+Plug 'folke/snacks.nvim'
 
 call plug#end()
 
@@ -150,6 +157,8 @@ set shiftwidth=4
 set expandtab
 set noincsearch
 set autoindent
+
+autocmd ColorScheme * highlight WinSeparator guifg=#808080 guibg=NONE
 
 syntax on       " syntax highlight
 set hlsearch    " highlight search result
@@ -235,6 +244,17 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+function! AirlineThemePatch(palette)
+  for l:mode in keys(a:palette)
+    if has_key(a:palette[l:mode], 'airline_c')
+      let a:palette[l:mode]['airline_c'] = ['#19e619', '#202020', 203, 235, '']
+    endif
+    if has_key(a:palette[l:mode], 'airline_x')
+      let a:palette[l:mode]['airline_x'] = ['#19e619', '#202020', 203, 235, '']
+    endif
+  endfor
+endfunction
+let g:airline_theme_patch_func = 'AirlineThemePatch'
 
 " GitGutter
 let g:gitgutter_sign_removed = "-"
@@ -270,6 +290,12 @@ let g:seoul256_background = 234
 set t_Co=256
 set bg=dark
 silent! colorscheme seoul256
+
+" v0.11.6 color setting
+highlight Statement cterm=NONE ctermfg=108 gui=NONE guifg=#98bc99
+highlight Comment gui=NONE guifg=#767676 guibg=NONE
+highlight Keyword gui=NONE guifg=#d15c80 guibg=NONE
+
 hi Normal ctermbg=none ctermfg=254
 hi Comment ctermfg=245
 hi LineNr ctermbg=none
@@ -344,9 +370,6 @@ nmap <F7> :CurLineHighlight<CR>
 
 " Easy align
 xmap ga <Plug>(EasyAlign)
-
-" Toggle paste mode with Control-P
-set pastetoggle=<C-p>
 
 " Comment Macro
 let @c="^i// \<ESC> \<Down>"   "@c
@@ -427,10 +450,6 @@ let g:tagbar_type_haskell = {
         \ 'instance' : 'ft'
     \ }
 \ }
-
-let g:blamer_enabled = 1
-let g:blamer_delay = 300
-let g:blamer_date_format = '%y/%m/%d'
 
 " TODO: usage will be refined later
 " Setup coq-lsp.nvim

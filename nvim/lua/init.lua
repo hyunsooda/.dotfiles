@@ -6,6 +6,28 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- vertical split setting
+vim.opt.fillchars:append({ vert = " " })
+
+-- diagnostics error color
+vim.api.nvim_set_hl(0, "DiagnosticError", { fg = "#FF4848" })
+
+require('gitsigns').setup({
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+  },
+  current_line_blame = true,  -- blamer.nvim 대체
+  current_line_blame_opts = {
+    delay = 1000,
+    virt_text_pos = 'eol',
+  },
+  current_line_blame_formatter = '<summary> • <author>, <author_time:%Y-%m-%d>',
+})
+
 -- -- Install package manager
 -- --    https://github.com/folke/lazy.nvim
 -- --    `:help lazy.nvim.txt` for more info
@@ -181,8 +203,8 @@ vim.g.maplocalleader = ' '
 -- vim.o.ignorecase = true
 -- vim.o.smartcase = true
 
--- -- Keep signcolumn on by default
--- vim.wo.signcolumn = 'yes'
+-- Keep signcolumn on by default
+vim.wo.signcolumn = 'yes'
 
 -- -- Decrease update time
 -- vim.o.updatetime = 250
@@ -193,7 +215,7 @@ vim.g.maplocalleader = ' '
 vim.o.completeopt = "menuone,noinsert,noselect"
 
 -- NOTE: You should make sure your terminal supports this
---vim.o.termguicolors = true
+-- vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
@@ -315,6 +337,13 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 --   },
 -- }
 
+-- -- [[ Configure Treesitter ]]
+-- require('nvim-treesitter.configs').setup {
+--   ensure_installed = { 'lua' },
+--   auto_install = false,
+--   highlight = { enable = false },
+-- }
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
@@ -325,7 +354,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagn
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
     _.server_capabilities.semanticTokensProvider = nil
-    
+
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -343,15 +372,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
   -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
@@ -374,7 +395,8 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  rust_analyzer = {},
+  -- `rust_analyzer` is managed by rustaceanvim
+  -- rust_analyzer = {},
   gopls = {},
   hls = {},
 
@@ -393,6 +415,18 @@ local servers = {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+vim.g.rustaceanvim = {
+  server = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    default_settings = {
+      ['rust-analyzer'] = {
+        check = { command = 'clippy' },
+      },
+    },
+  },
+}
+
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
@@ -401,79 +435,18 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
+  handlers = {
+    function(server_name)
+      -- rustaceanvim이 처리하므로 rust_analyzer는 건너뜀
+      if server_name == 'rust_analyzer' then return end
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+      }
+    end,
+  }
 }
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-
-
--- Configure LSP through rust-tools.nvim plugin.
--- rust-tools will configure and enable certain LSP features for us.
--- See https://github.com/simrat39/rust-tools.nvim#configuration
-local rs_opts = {
-  tools = {
-    autoSetHints = true,
-
-    runnables = {
-      use_telescope = true,
-    },
-    inlay_hints = {
-      auto = true,
-      show_parameter_hints = true,
-      parameter_hints_prefix = "<- ",
-      other_hints_prefix = "=> ",
-      max_len_align = false,
-      right_align = false,
-      right_align_padding = 7,
-    },
-  },
-
-  -- all the opts to send to nvim-lspconfig
-  -- these override the defaults set by rust-tools.nvim
-  -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-  server = {
-    -- on_attach is a callback called when the language server attachs to the buffer
-    on_attach = on_attach,
-    settings = {
-      -- to enable rust-analyzer settings visit:
-      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
-        assist = {
-          importEnforceGranularity = true,
-          importPrefix = "crate"
-        },
-        cargo = {
-          allFeatures = true
-        },
-        inlayHints = {
-          lifetimeElisionHints = {
-            enable = true,
-            useParameterNames = true
-          },
-        },
-        -- enable clippy on save
-        checkOnSave = {
-          command = "clippy",
-          allFeatures = true,
-        },
-        lens = {
-            enable = true
-        },
-        diagnostics = {
-            enable = true
-        }
-      },
-    },
-  },
-}
-require("rust-tools").setup(rs_opts)
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -521,38 +494,100 @@ cmp.setup {
 }
 
 
-require('lspconfig').clangd.setup {
-  cmd = { "clangd", "--background-index" },
-  on_attach = function(client, bufnr)
-    client.server_capabilities.semanticTokensProvider = nil
+vim.keymap.set('n', 'gr', function()
+  require('telescope.builtin').lsp_references()
+end, { desc = 'LSP: [G]oto [R]eferences' })
 
-    local bufmap = function(lhs, rhs)
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', lhs, rhs, { noremap = true, silent = true })
-    end
-    bufmap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-    bufmap('gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+vim.keymap.set('n', 'gd', function()
+  vim.lsp.buf.definition()
+end, { desc = 'LSP: [G]oto [D]efinition' })
+
+vim.keymap.set('n', 'gI', function()
+  vim.lsp.buf.implementation()
+end, { desc = 'LSP: [G]oto [I]mplementation' })
+
+vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'LSP: Type [D]efinition' })
+
+vim.keymap.set('n', '<leader>ds', function()
+  require('telescope.builtin').lsp_document_symbols()
+end, { desc = 'LSP: [D]ocument [S]ymbols' })
+
+vim.keymap.set('n', '<leader>ws', function()
+  require('telescope.builtin').lsp_dynamic_workspace_symbols()
+end, { desc = 'LSP: [W]orkspace [S]ymbols' })
+
+vim.keymap.set('n', 'K', function()
+  vim.lsp.buf.hover({
+    border = "rounded",
+    focusable = false,
+    syntax = "plain"
+  })
+end, { desc = "LSP 도움말 보기 (에러 방지)" })
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    syntax = "plain",
+  }
+)
+
+vim.diagnostic.config({
+  virtual_text = true,
+  -- virtual_lines = true, -- too verbose
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})
+
+-- Disable lint diagnostics for Python files (LSP itself remains active)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function(args)
+    vim.diagnostic.enable(false, { bufnr = args.buf })
   end,
-}
+})
 
--- require'coq-lsp'.setup {
---   -- The configuration for coq-lsp.nvim.
---   -- The following is the default configuration.
---   coq_lsp_nvim = {
---     -- to be added
---   },
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
+    if client.name == "rust_analyzer" or client.name == "clangd" or client.name == "solidity_ls_nomicfoundation" then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+    if client.server_capabilities.inlayHintProvider and client.name == "rust_analyzer" then
+      vim.lsp.inlay_hint.enable(true)
+      vim.api.nvim_create_autocmd("InsertEnter", {
+        buffer = bufnr,
+        callback = function() vim.lsp.inlay_hint.enable(false) end,
+      })
+      vim.api.nvim_create_autocmd("InsertLeave", {
+        buffer = bufnr,
+        callback = function() vim.lsp.inlay_hint.enable(true) end,
+      })
+    end
+  end,
+})
 
---   -- The configuration forwarded to `:help lspconfig-setup`.
---   -- The following is an example.
---   lsp = {
---     on_attach = function(client, bufnr)
---       -- your mappings, etc
---     end,
---     -- coq-lsp server initialization configurations, defined here:
---     -- https://github.com/ejgallego/coq-lsp/blob/main/editor/code/src/config.ts#L3
---     -- Documentations are at https://github.com/ejgallego/coq-lsp/blob/main/editor/code/package.json.
---     init_options = {
---       show_notices_as_diagnostics = true,
---     },
---     autostart = false, -- use this if you want to manually launch coq-lsp with :LspStart.
---   },
--- }
+
+
+-- Calude code setting
+require("claudecode").setup()
+
+vim.keymap.set('n', '<leader>ac', '<cmd>ClaudeCode<cr>',             { desc = 'Toggle Claude' })
+vim.keymap.set('n', '<leader>af', '<cmd>ClaudeCodeFocus<cr>',        { desc = 'Focus Claude' })
+vim.keymap.set('n', '<leader>ar', '<cmd>ClaudeCode --resume<cr>',    { desc = 'Resume Claude' })
+vim.keymap.set('n', '<leader>aC', '<cmd>ClaudeCode --continue<cr>',  { desc = 'Continue Claude' })
+vim.keymap.set('n', '<leader>am', '<cmd>ClaudeCodeSelectModel<cr>',  { desc = 'Select Claude model' })
+vim.keymap.set('n', '<leader>ab', '<cmd>ClaudeCodeAdd %<cr>',        { desc = 'Add current buffer' })
+vim.keymap.set('v', '<leader>as', '<cmd>ClaudeCodeSend<cr>',         { desc = 'Send to Claude' })
+vim.keymap.set('n', '<leader>aa', '<cmd>ClaudeCodeDiffAccept<cr>',   { desc = 'Accept diff' })
+vim.keymap.set('n', '<leader>ad', '<cmd>ClaudeCodeDiffDeny<cr>',     { desc = 'Deny diff' })
+vim.keymap.set('t', '<C-h>',      '<C-\\><C-n><C-w>h',               { desc = 'Move to nvim panel' })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'NvimTree', 'neo-tree', 'oil', 'minifiles', 'netrw' },
+  callback = function()
+    vim.keymap.set('n', '<leader>as', '<cmd>ClaudeCodeTreeAdd<cr>', { buffer = true, desc = 'Add file' })
+  end,
+})
