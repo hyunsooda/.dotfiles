@@ -1,5 +1,21 @@
 
 
+-- Patch inlay hints to render right-aligned instead of inline
+do
+  local _orig_set_extmark = vim.api.nvim_buf_set_extmark
+  local _inlay_ns = nil
+  vim.api.nvim_buf_set_extmark = function(bufnr, ns_id, row, col, opts)
+    if not _inlay_ns then
+      _inlay_ns = vim.api.nvim_get_namespaces()["nvim.lsp.inlayhint"]
+    end
+    if _inlay_ns and ns_id == _inlay_ns and opts and opts.virt_text then
+      opts = vim.tbl_extend("force", opts, { virt_text_pos = "eol" })
+      col = 0
+    end
+    return _orig_set_extmark(bufnr, ns_id, row, col, opts)
+  end
+end
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -556,14 +572,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
       client.server_capabilities.semanticTokensProvider = nil
     end
     if client.server_capabilities.inlayHintProvider and client.name == "rust_analyzer" then
-      vim.lsp.inlay_hint.enable(true)
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+
       vim.api.nvim_create_autocmd("InsertEnter", {
         buffer = bufnr,
-        callback = function() vim.lsp.inlay_hint.enable(false) end,
+        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) end,
       })
       vim.api.nvim_create_autocmd("InsertLeave", {
         buffer = bufnr,
-        callback = function() vim.lsp.inlay_hint.enable(true) end,
+        callback = function() vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end,
       })
     end
   end,
