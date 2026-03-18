@@ -588,6 +588,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 
 
+-- Render markdown in buffer
+require('render-markdown').setup({
+  heading = {
+    icons = {},
+  },
+})
+
 -- Calude code setting
 require("claudecode").setup()
 

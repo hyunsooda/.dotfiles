@@ -136,6 +136,7 @@ Plug 'marktoda/vim-huff'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'MeanderingProgrammer/render-markdown.nvim'
 
 " Verilog
 Plug 'WeiChungWu/vim-SystemVerilog'
