@@ -1,0 +1,23 @@
+{
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ${HOME}/.claude/statusline-command.sh"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${HOME}/.claude/get-usage-reset.py &"
+          }
+        ]
+      }
+    ]
+  }
+}
