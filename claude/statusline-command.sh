@@ -72,6 +72,18 @@ if [ -n "${used_pct}" ] && [ -n "${remaining_pct}" ]; then
   usage_line=""
   reset_str=""
   usage_cache="${HOME}/.claude/usage_reset_cache"
+
+  # Account info (from cache)
+  account_segment=""
+  auth_name=$(jq -r '.auth_name // empty' "${usage_cache}" 2>/dev/null)
+  auth_org=$(jq -r '.auth_org // empty' "${usage_cache}" 2>/dev/null)
+  if [ -n "${auth_name}" ]; then
+    if [ -n "${auth_org}" ]; then
+      account_segment="${DIM}${auth_name} (${auth_org})${RESET} "
+    else
+      account_segment="${DIM}${auth_name}${RESET} "
+    fi
+  fi
   if [ -f "${usage_cache}" ]; then
     session_pct=$(jq -r '.session_pct // empty' "${usage_cache}" 2>/dev/null)
     week_pct=$(jq -r '.week_pct // empty' "${usage_cache}" 2>/dev/null)
@@ -92,7 +104,7 @@ if [ -n "${used_pct}" ] && [ -n "${remaining_pct}" ]; then
 
   second_line=""
   if [ -n "${usage_line}" ] || [ -n "${reset_str}" ]; then
-    second_line=$'\n'"$(printf '%s%s' "${usage_line}" "${reset_str}")"
+    second_line=$'\n'"$(printf '%s%s%s' "${account_segment}" "${usage_line}" "${reset_str}")"
   fi
 
   ctx_segment=" $(printf '%sctx %s%%%s%s' "${ctx_color}" "${used_int}" "${ctx_warn}${RESET}" "${second_line}")"

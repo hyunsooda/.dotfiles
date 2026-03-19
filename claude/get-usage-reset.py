@@ -1,8 +1,24 @@
 #!/usr/bin/env python3
 """Fetch Claude Code /usage stats and cache to ~/.claude/usage_reset_cache"""
-import pexpect, re, time, os, json
+import pexpect, re, time, os, json, subprocess
 
 CACHE_FILE = os.path.expanduser('~/.claude/usage_reset_cache')
+AUTH_TTL = 3600  # 1 hour
+
+def fetch_auth(debug=False):
+    try:
+        out = subprocess.run(['claude', 'auth', 'status'], capture_output=True, text=True, timeout=10)
+        data = json.loads(out.stderr or out.stdout)
+        email = data.get('email', '')
+        name = email.split('@')[0] if email else ''
+        org = data.get('orgName', '')
+        if debug:
+            print(f"AUTH: name={name}, org={org}")
+        return {'auth_name': name, 'auth_org': org, 'auth_updated_at': time.time()}
+    except Exception as e:
+        if debug:
+            print(f"AUTH ERROR: {e}")
+        return {}
 
 def fetch_usage(debug=False):
     child = pexpect.spawn('claude', timeout=30, encoding='utf-8', cwd=os.path.expanduser('~/.claude'))
@@ -63,8 +79,23 @@ if __name__ == '__main__':
         if age < 120:
             sys.exit(0)
 
+    # Load existing cache for auth data
+    cached = {}
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE) as f:
+            cached = json.load(f)
+
     result = fetch_usage(debug=debug)
     if result:
+        # Refresh auth if stale or missing
+        auth_age = time.time() - cached.get('auth_updated_at', 0)
+        if auth_age >= AUTH_TTL or 'auth_name' not in cached:
+            result.update(fetch_auth(debug=debug))
+        else:
+            for k in ('auth_name', 'auth_org', 'auth_updated_at'):
+                if k in cached:
+                    result[k] = cached[k]
+
         with open(CACHE_FILE, 'w') as f:
             json.dump(result, f)
         print(f"Cached: {result}")
