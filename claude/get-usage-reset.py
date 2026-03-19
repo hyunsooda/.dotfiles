@@ -57,10 +57,10 @@ if __name__ == '__main__':
     import sys
     debug = '--debug' in sys.argv
 
-    # Skip if cache is fresh (< 5 minutes old)
+    # Skip if cache is fresh (< 2 minutes old)
     if not debug and os.path.exists(CACHE_FILE):
         age = time.time() - os.path.getmtime(CACHE_FILE)
-        if age < 300:
+        if age < 120:
             sys.exit(0)
 
     result = fetch_usage(debug=debug)
