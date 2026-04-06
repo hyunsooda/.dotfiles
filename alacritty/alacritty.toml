@@ -31,7 +31,7 @@ foreground = "#E8EAED"
 size = 11.75   # 43 inch monitor
 
 [font.normal]
-family = "monospace"
+family = "DejaVuSansM Nerd Font"
 
 [[keyboard.bindings]]
 action = "Down"
