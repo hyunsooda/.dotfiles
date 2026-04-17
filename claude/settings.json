@@ -1,0 +1,23 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node $HOME/.claude/hud/omc-hud.mjs"
+  },
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "oh-my-claudecode@omc": true
+  },
+  "extraKnownMarketplaces": {
+    "omc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+      }
+    }
+  },
+  "skipDangerousModePermissionPrompt": true
+}
