@@ -589,9 +589,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 
 -- Render markdown in buffer
+vim.api.nvim_set_hl(0, 'MyMdH1Bg', { bg = '#3a5c3a' })
+vim.api.nvim_set_hl(0, 'MyMdH2Bg', { bg = '#2e4a2e' })
+vim.api.nvim_set_hl(0, 'MyMdH3Bg', { bg = '#27402a' })
+vim.api.nvim_set_hl(0, 'MyMdH4Bg', { bg = '#223825' })
+vim.api.nvim_set_hl(0, 'MyMdH1',   { fg = '#d7ffd7', bold = true })
+vim.api.nvim_set_hl(0, 'MyMdH2',   { fg = '#b0d7b0' })
+vim.api.nvim_set_hl(0, 'MyMdH3',   { fg = '#87c787' })
+vim.api.nvim_set_hl(0, 'MyMdH4',   { fg = '#6aaf6a' })
+
 require('render-markdown').setup({
   heading = {
     icons = {},
+    backgrounds = { 'MyMdH1Bg', 'MyMdH2Bg', 'MyMdH3Bg', 'MyMdH4Bg' },
+    foregrounds = { 'MyMdH1',   'MyMdH2',   'MyMdH3',   'MyMdH4'   },
   },
 })
 

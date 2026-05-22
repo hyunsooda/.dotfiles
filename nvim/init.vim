@@ -298,6 +298,7 @@ let g:rustfmt_autosave = 1
 " #### Coloring ##################################
 let g:seoul256_background = 234
 set t_Co=256
+set termguicolors
 set bg=dark
 silent! colorscheme seoul256
 
