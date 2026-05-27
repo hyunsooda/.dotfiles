@@ -239,32 +239,6 @@ autocmd BufNewFile,BufRead *.js call SetJsHi()
 " Remove trailing whitespaces
 command! RemoveTrailingWhitespaces %s/\s\+$//
 
-" Vim-airline
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-" let g:airline#extensions#hunks#enabled = 1
-" let g:airline#extensions#branch#enabled = 1
-" function! AirlineThemePatch(palette)
-"   for l:mode in keys(a:palette)
-"     if has_key(a:palette[l:mode], 'airline_c')
-"       let a:palette[l:mode]['airline_c'] = ['#19e619', '#202020', 203, 235, '']
-"     endif
-"     if has_key(a:palette[l:mode], 'airline_x')
-"       let a:palette[l:mode]['airline_x'] = ['#19e619', '#202020', 203, 235, '']
-"     endif
-"   endfor
-"   " Change filename color to orange when buffer is modified
-"   let s:modified_c = ['#e6a319', '#202020', 214, 235, '']
-"   for l:mode in ['normal', 'insert', 'replace', 'visual', 'inactive']
-"     let l:mod_key = l:mode . '_modified'
-"     if !has_key(a:palette, l:mod_key)
-"       let a:palette[l:mod_key] = {}
-"     endif
-"     let a:palette[l:mod_key]['airline_c'] = s:modified_c
-"   endfor
-" endfunction
-" let g:airline_theme_patch_func = 'AirlineThemePatch'
-
 " GitGutter
 let g:gitgutter_sign_removed = "-"
 let g:gitgutter_sign_removed_first_line = "^"
