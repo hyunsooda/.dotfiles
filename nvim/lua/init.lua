@@ -222,6 +222,9 @@ require('gitsigns').setup({
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
+-- Hide cmdline search count ([2/15]) since lualine already shows it
+vim.opt.shortmess:append('S')
+
 -- -- Decrease update time
 -- vim.o.updatetime = 250
 -- vim.o.timeout = true
@@ -355,9 +358,9 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- -- [[ Configure Treesitter ]]
 -- require('nvim-treesitter.configs').setup {
---   ensure_installed = { 'lua' },
+--   ensure_installed = { 'rust' },
 --   auto_install = false,
---   highlight = { enable = false },
+--   highlight = { enable = true },
 -- }
 
 -- Diagnostic keymaps
@@ -563,6 +566,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Auto-open quickfix for Rust errors on save (vim-go style)
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.rs",
+  callback = function(args)
+    -- Wait for rust-analyzer's cargo check to finish (async)
+    vim.defer_fn(function()
+      local errors = vim.diagnostic.get(args.buf, { severity = vim.diagnostic.severity.ERROR })
+      if #errors > 0 then
+        local items = vim.diagnostic.toqflist(errors)
+        vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = items })
+        vim.cmd('copen')
+      else
+        vim.cmd('cclose')
+      end
+    end, 1500)
+  end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local bufnr = args.buf
@@ -625,4 +646,87 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.keymap.set('n', '<leader>as', '<cmd>ClaudeCodeTreeAdd<cr>', { buffer = true, desc = 'Add file' })
   end,
+})
+
+local lualine_theme = {
+  normal = {
+    a = { fg = '#000000', bg = '#dfff00', gui = 'bold' },
+    b = { fg = '#ffffff', bg = '#444444' },
+    c = { fg = '#19e619', bg = '#000000' },
+    x = { fg = '#19e619', bg = '#000000' },
+    y = { fg = '#ffffff', bg = '#888888' },
+    z = { fg = '#000000', bg = '#dfff00' },
+  },
+  insert  = { a = { fg = '#000000', bg = '#00dfff', gui = 'bold' } },
+  visual  = { a = { fg = '#000000', bg = '#ffaf00', gui = 'bold' } },
+  replace = { a = { fg = '#ffffff', bg = '#af0000', gui = 'bold' } },
+  command = { a = { fg = '#000000', bg = '#00d700', gui = 'bold' } },
+  inactive = {
+    a = { fg = '#4e4e4e', bg = '#1c1c1c' },
+    b = { fg = '#4e4e4e', bg = '#262626' },
+    c = { fg = '#4e4e4e', bg = '#303030' },
+  },
+}
+
+local function lsp_names()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then return '' end
+  local names = {}
+  for _, c in ipairs(clients) do
+    table.insert(names, c.name)
+  end
+  return table.concat(names, ',')
+end
+
+require('lualine').setup({
+  options = {
+    theme = lualine_theme,
+    icons_enabled = false,
+    section_separators = '',
+    component_separators = '',
+    globalstatus = true,
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = {
+      'branch',
+      {
+        'diff',
+        diff_color = {
+          added    = { fg = '#00d700' },
+          modified = { fg = '#e6a319' },
+          removed  = { fg = '#ff5555' },
+        },
+      },
+      'diagnostics',
+    },
+    lualine_c = {
+      {
+        'filename',
+        path = 1,
+        color = function()
+          return vim.bo.modified and { fg = '#e6a319' } or { fg = '#19e619' }
+        end,
+      },
+    },
+    lualine_x = { lsp_names, 'filetype' },
+    lualine_y = { 'encoding', 'fileformat' },
+    lualine_z = { 'searchcount', 'selectioncount', 'progress', 'location' },
+  },
+  winbar = {
+    lualine_c = {
+      {
+        'filename',
+        path = 1,
+        color = function()
+          return vim.bo.modified and { fg = '#e6a319' } or { fg = '#19e619' }
+        end,
+      },
+    },
+  },
+  inactive_winbar = {
+    lualine_c = {
+      { 'filename', path = 1, color = { fg = '#888888' } },
+    },
+  },
 })
