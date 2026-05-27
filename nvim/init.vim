@@ -45,7 +45,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Head-up display (HUD)
-Plug 'bling/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 
@@ -58,7 +58,7 @@ Plug 'gregsexton/MatchTag' " highlight matching tags
 Plug 'junegunn/vim-easy-align' " Align assignment statements
 Plug 'tmux-plugins/vim-tmux'
 Plug 'nvie/vim-flake8'
-Plug 'blukat29/vim-llvm-lite' " LLVM IR and TableGen
+Plug 'rhysd/vim-llvm' " LLVM IR, TableGen, MLIR
 Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
@@ -84,8 +84,8 @@ Plug 'lewis6991/gitsigns.nvim'
 
 
 Plug 'bohlender/vim-smt2' " SMT-LIB2 syntax
-Plug 'mrcjkb/rustaceanvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'mrcjkb/rustaceanvim', { 'tag': 'v8.0.5' } " v9.0.0 drops nvim 0.11 support
+Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
 
 " For NVIM configuration
 Plug 'neovim/nvim-lspconfig'
@@ -198,7 +198,6 @@ autocmd BufNewFile,BufRead *.goir set ft=go
 autocmd BufNewFile,BufRead *.fe set ft=rust
 autocmd BufNewFile,BufRead *.v set ft=verilog
 
-au BufRead,BufNewFile *.mlir set filetype=mlir
 
 " dosini syntax apply to *.conf
 au BufEnter,BufRead *.conf setf dosini
@@ -241,30 +240,30 @@ autocmd BufNewFile,BufRead *.js call SetJsHi()
 command! RemoveTrailingWhitespaces %s/\s\+$//
 
 " Vim-airline
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline#extensions#hunks#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-function! AirlineThemePatch(palette)
-  for l:mode in keys(a:palette)
-    if has_key(a:palette[l:mode], 'airline_c')
-      let a:palette[l:mode]['airline_c'] = ['#19e619', '#202020', 203, 235, '']
-    endif
-    if has_key(a:palette[l:mode], 'airline_x')
-      let a:palette[l:mode]['airline_x'] = ['#19e619', '#202020', 203, 235, '']
-    endif
-  endfor
-  " Change filename color to orange when buffer is modified
-  let s:modified_c = ['#e6a319', '#202020', 214, 235, '']
-  for l:mode in ['normal', 'insert', 'replace', 'visual', 'inactive']
-    let l:mod_key = l:mode . '_modified'
-    if !has_key(a:palette, l:mod_key)
-      let a:palette[l:mod_key] = {}
-    endif
-    let a:palette[l:mod_key]['airline_c'] = s:modified_c
-  endfor
-endfunction
-let g:airline_theme_patch_func = 'AirlineThemePatch'
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" let g:airline#extensions#hunks#enabled = 1
+" let g:airline#extensions#branch#enabled = 1
+" function! AirlineThemePatch(palette)
+"   for l:mode in keys(a:palette)
+"     if has_key(a:palette[l:mode], 'airline_c')
+"       let a:palette[l:mode]['airline_c'] = ['#19e619', '#202020', 203, 235, '']
+"     endif
+"     if has_key(a:palette[l:mode], 'airline_x')
+"       let a:palette[l:mode]['airline_x'] = ['#19e619', '#202020', 203, 235, '']
+"     endif
+"   endfor
+"   " Change filename color to orange when buffer is modified
+"   let s:modified_c = ['#e6a319', '#202020', 214, 235, '']
+"   for l:mode in ['normal', 'insert', 'replace', 'visual', 'inactive']
+"     let l:mod_key = l:mode . '_modified'
+"     if !has_key(a:palette, l:mod_key)
+"       let a:palette[l:mod_key] = {}
+"     endif
+"     let a:palette[l:mod_key]['airline_c'] = s:modified_c
+"   endfor
+" endfunction
+" let g:airline_theme_patch_func = 'AirlineThemePatch'
 
 " GitGutter
 let g:gitgutter_sign_removed = "-"
