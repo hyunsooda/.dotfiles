@@ -60,14 +60,6 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
-## 6. Comments: Concise or None
-
-**One short line max. If it needs a paragraph, rewrite the code instead.**
-
-- No multi-line comment blocks explaining what the code does.
-- No verbose docstrings restating the function signature.
-- If the why fits in a sentence, write it. If not, it belongs in the commit message.
-
 ## 5. No Change-Narrative Comments
 
 **Don't document history in code. That's what git is for.**
@@ -79,6 +71,14 @@ Never write comments that describe what changed:
 
 These rot immediately — the code moves on but the comment stays, becoming misleading.
 Use the commit message or PR description for change rationale instead.
+
+## 6. Comments: Concise or None
+
+**One short line max. If it needs a paragraph, rewrite the code instead.**
+
+- No multi-line comment blocks explaining what the code does.
+- No verbose docstrings restating the function signature.
+- If the why fits in a sentence, write it. If not, it belongs in the commit message.
 
 ---
 
