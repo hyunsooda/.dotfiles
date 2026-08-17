@@ -1,5 +1,4 @@
 
-
 -- Patch inlay hints to render right-aligned instead of inline
 do
   local _orig_set_extmark = vim.api.nvim_buf_set_extmark
@@ -414,8 +413,11 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- `rust_analyzer` is managed by rustaceanvim
-  -- rust_analyzer = {},
+  rust_analyzer = {
+    ['rust-analyzer'] = {
+      check = { command = 'clippy' },
+    },
+  },
   gopls = {},
   hls = {},
 
@@ -430,21 +432,16 @@ local servers = {
 -- Setup neovim lua configuration
 -- require('neodev').setup()
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-vim.g.rustaceanvim = {
-  server = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    default_settings = {
-      ['rust-analyzer'] = {
-        check = { command = 'clippy' },
-      },
-    },
-  },
-}
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers.
+-- default_capabilities() returns a standalone completion-only fragment, not a merge
+-- of what's passed in, so deep-extend it onto the base capabilities instead of
+-- overwriting them (overwriting was silently dropping workspace/textDocument
+-- capabilities outside of completion, e.g. workspace.inlayHint.refreshSupport).
+local capabilities = vim.tbl_deep_extend(
+  'force',
+  vim.lsp.protocol.make_client_capabilities(),
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
 -- Setup mason so it can manage external tooling
 require('mason').setup()
@@ -454,18 +451,17 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
-  handlers = {
-    function(server_name)
-      -- rustaceanvim이 처리하므로 rust_analyzer는 건너뜀
-      if server_name == 'rust_analyzer' then return end
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-      }
-    end,
-  }
+  automatic_enable = false,
 }
+
+for server_name, server_settings in pairs(servers) do
+  vim.lsp.config(server_name, {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = server_settings,
+  })
+  vim.lsp.enable(server_name)
+end
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -594,6 +590,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
     if client.server_capabilities.inlayHintProvider and client.name == "rust_analyzer" then
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+
+      -- Known nvim/rust-analyzer issue: hints requested before rust-analyzer
+      -- finishes initial indexing come back empty, and nvim's decoration cache
+      -- doesn't reliably repaint once real hints arrive later via the server's
+      -- workspace/inlayHint/refresh push (neovim/neovim#26511, #28624,
+      -- nvim-lspconfig#2876). Re-enabling after a delay is the standard workaround.
+      vim.defer_fn(function()
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      end, 2500)
 
       vim.api.nvim_create_autocmd("InsertEnter", {
         buffer = bufnr,

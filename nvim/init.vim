@@ -84,7 +84,6 @@ Plug 'lewis6991/gitsigns.nvim'
 
 
 Plug 'bohlender/vim-smt2' " SMT-LIB2 syntax
-Plug 'mrcjkb/rustaceanvim', { 'tag': 'v8.0.5' } " v9.0.0 drops nvim 0.11 support
 Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
 
 " For NVIM configuration
@@ -104,7 +103,6 @@ Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'simrat39/rust-tools.nvim'
 
 " TODO: usage will be refined later
 "Coq
