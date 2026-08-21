@@ -418,8 +418,12 @@ local servers = {
       check = { command = 'clippy' },
     },
   },
+  clangd = {},
   gopls = {},
   hls = {},
+  ts_ls = {},
+  solidity_ls_nomicfoundation = {},
+  basedpyright = {},
 
   lua_ls = {
     Lua = {
