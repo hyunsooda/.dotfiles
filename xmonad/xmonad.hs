@@ -29,6 +29,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
 import XMonad.Hooks.ManageDocks (avoidStruts, docks, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Hooks.Rescreen (addAfterRescreenHook, addRandrChangeHook)
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.StatusBar
@@ -121,9 +122,8 @@ myStartupHook = do
 
   spawnOnce "fusuma"
   spawnOnce "xrdb ~/.Xresources"
-  spawnOnce "xinput set-prop 11 'libinput Tapping Enabled' 1" -- enable tap to click
-  spawnOnce "xinput set-prop 11 'libinput Natural Scrolling Enabled' 1" -- enable natural scrolling
-  spawnOnce "xrandr --output eDP-1 --off" -- turn off builtin monitor
+  spawnOnce "for d in $(xinput list --id-only); do xinput list-props $d | grep -q 'Tapping Enabled (' && { xinput set-prop $d 'libinput Tapping Enabled' 1; xinput set-prop $d 'libinput Natural Scrolling Enabled' 1; }; done" -- enable tap to click and natural scrolling
+  spawnOnce "monitor-switch"
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
   spawnOnce "notify-log $HOME/.log/notify.log"
@@ -665,7 +665,7 @@ main :: IO ()
 main = do
 
   -- the xmonad, ya know...what the WM is named after!
-  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ docks . ewmh $ def
+  xmonad $ addDescrKeys' ((mod4Mask, xK_F1), showKeybindings) myKeys $ docks . ewmh . addRandrChangeHook (spawn "monitor-switch") . addAfterRescreenHook (spawn "polybar-xmonad") $ def
     { manageHook         = myManageHook <+> manageDocks
     , handleEventHook    = windowedFullscreenFixEventHook <> swallowEventHook (className =? "Alacritty"  <||> className =? "st-256color" <||> className =? "XTerm") (return True) <> trayerPaddingXmobarEventHook
     , modMask            = myModMask

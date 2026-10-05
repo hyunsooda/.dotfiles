@@ -1,0 +1,10 @@
+#!/bin/sh
+# External monitor only when one is connected, builtin panel otherwise.
+ext=$(xrandr | awk '/ connected/ && $1 !~ /^eDP/ {print $1; exit}')
+int=$(xrandr | awk '/^eDP.* connected/ {print $1; exit}')
+if [ -n "$ext" ]; then
+    xrandr --output "$ext" --auto --primary --output "$int" --off
+else
+    xrandr --auto
+    xrandr --output "$int" --auto --primary
+fi
