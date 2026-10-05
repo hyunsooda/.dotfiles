@@ -84,7 +84,7 @@ Plug 'lewis6991/gitsigns.nvim'
 
 
 Plug 'bohlender/vim-smt2' " SMT-LIB2 syntax
-Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'main', 'do': ':TSUpdate'}
 
 " For NVIM configuration
 Plug 'neovim/nvim-lspconfig'
