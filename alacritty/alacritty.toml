@@ -57,6 +57,6 @@ lines = 50
 [window]
 decorations = "none"
 
-[shell]
-args = ["-c", "neofetch && zsh"]
+[terminal.shell]
+args = ["-c", "fastfetch && zsh"]
 program = "/bin/bash"
