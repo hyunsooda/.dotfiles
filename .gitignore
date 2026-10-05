@@ -41,3 +41,9 @@ Thumbs.db
 ######################
 .tags
 tags
+
+# Local state #
+######################
+nvim/autoload/
+nvim/bundle/
+.omc/
