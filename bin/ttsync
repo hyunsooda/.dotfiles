@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Sync a local tt-metal checkout to a server with mutagen.
+#   ttsync start  <server> <local_dir> <remote_dir>
+#   ttsync stop   <server>
+#   ttsync status <server>
+# e.g. ttsync start ttdev12 ~/workspace/onboarding/tt-metal /home/hyeonsu/tt-metal
+#
+# Per server, two sessions (mutagen's recommended VCS setup):
+#   ttm-<server>      working tree, two-way, local wins conflicts, .git excluded
+#   ttm-<server>-git  .git mirror, local -> server only (server needs .git for create_venv.sh and versioning)
+# Git operations happen locally only; the server only builds and runs.
+set -euo pipefail
+
+usage="usage: $0 start <server> <local_dir> <remote_dir> | stop <server> | status <server>"
+action="${1:?$usage}"
+server="${2:?$usage}"
+name="ttm-$server"
+
+# Build outputs and per-machine caches; all of these are git-ignored too.
+ignores=(
+    /build /build_Release /generated /runtime /.cache /.cpmcache /.venv /.clangd /uv.lock
+    /tt_metal/llrt/hal/generated /tt_metal/pre-compiled
+    /ttnn/ttnn/_ttnn.so /ttnn/ttnn.egg-info /tools/triage/inspector_capnp.pyi
+    .omc __pycache__
+)
+
+case "$action" in
+start)
+    local_dir="$(realpath "${3:?$usage}")"
+    remote_dir="${4:?$usage}"
+    [ -d "$local_dir/.git" ] || { echo "not a git checkout: $local_dir" >&2; exit 1; }
+    ignore_args=()
+    for path in "${ignores[@]}"; do
+        ignore_args+=(--ignore="$path")
+    done
+    mutagen sync create --name="$name" --sync-mode=two-way-resolved --ignore-vcs "${ignore_args[@]}" \
+        "$local_dir" "$server:$remote_dir"
+    mutagen sync create --name="$name-git" --sync-mode=one-way-replica \
+        "$local_dir/.git" "$server:$remote_dir/.git"
+    mutagen sync flush "$name" "$name-git"
+    mutagen sync list "$name" "$name-git"
+    ;;
+stop)
+    mutagen sync terminate "$name" "$name-git"
+    ;;
+status)
+    mutagen sync list "$name" "$name-git"
+    ;;
+*)
+    echo "$usage" >&2
+    exit 1
+    ;;
+esac
